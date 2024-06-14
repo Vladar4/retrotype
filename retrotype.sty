@@ -1,0 +1,717 @@
+% !TeX program = xelatex
+\ProvidesPackage{retrotype}[2024-06-14]
+
+\RequirePackage{comment}
+\RequirePackage[autostyle=true]{csquotes}
+\RequirePackage{eso-pic}
+\RequirePackage%[showframe]% <- uncomment for debugging
+	{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{multicol}
+\RequirePackage{ifthen}
+\RequirePackage{indentfirst}
+\RequirePackage{linegoal}
+\RequirePackage{tabto}% Tabbing to fixed positions
+\RequirePackage{tikz}
+
+
+%%%%%%%%
+% FONT %
+%%%%%%%%
+
+\RequirePackage{fontspec}
+
+\setmainfont{TT2020}% TT2020.fontspec
+\setmonofont{TT2020}% TT2020.fontspec
+\renewcommand{\familydefault}{\ttdefault}
+
+\newlength{\charwidth}
+\settowidth{\charwidth}{\normalfont x}
+
+% Document font size
+\newlength{\docfontsize}
+%\newlength{\docfontsizeInt}
+\makeatletter
+\setlength{\docfontsize}{\f@size pt}
+\newcommand{\docfontsizeInt}{1\@ptsize}
+\makeatother
+
+
+%%%%%%%%
+% PAGE %
+%%%%%%%%
+
+% \defaultGeometry
+\makeatletter
+\newlength{\retrotype@roughwidth}
+\newlength{\retrotype@roughheight}
+\newlength{\retrotype@textwidth}
+\newlength{\retrotype@textheight}
+\newcommand{\pagelayout}{undefined}
+% default values
+\def\retrotype@wratio{1.298}
+\def\retrotype@hratio{1.28}
+
+\newcommand{\defaultGeometry}{
+	\ifdim\pdfpagewidth=210mm% A4
+		\renewcommand{\pagelayout}{A4}
+	\else
+	\ifdim\pdfpagewidth=148mm% A5
+		\renewcommand{\pagelayout}{A5}
+	\else
+	\ifdim\pdfpagewidth=8.5in% Letter or Legal
+		\ifdim\pdfpageheight=11in% Letter
+			\renewcommand{\pagelayout}{Letter}
+			\ifcase\@ptsize% 10pt
+			\or% 11pt
+				\def\retrotype@wratio{1.28}
+			\or% 12pt
+			\fi
+		\else% Legal
+			\renewcommand{\pagelayout}{Legal}
+			\ifcase\@ptsize% 10pt
+			\or% 11pt
+				\def\retrotype@wratio{1.28}
+			\or% 12pt
+			\fi
+		\fi
+	\else
+	\ifdim\pdfpagewidth=7.25in% Executive
+		\renewcommand{\pagelayout}{Executive}
+		\ifcase\@ptsize% 10pt
+			\def\retrotype@wratio{1.28}
+		\or% 11pt
+			\def\retrotype@wratio{1.28}
+		\or% 12pt
+			\def\retrotype@wratio{1.31}
+		\fi
+	\fi\fi\fi\fi
+	
+	% rough text dimensions
+	\pgfmathsetlength{\retrotype@roughwidth}{\pdfpagewidth / \retrotype@wratio}
+	\pgfmathsetlength{\retrotype@roughheight}{\pdfpageheight / \retrotype@hratio}
+	% exact text dimensions
+	\pgfmathsetlength{\retrotype@textwidth}{\charwidth * int(\retrotype@roughwidth / \charwidth)}
+	\pgfmathsetlength{\retrotype@textheight}{\baselineskip * int(\retrotype@roughheight / \baselineskip)}
+	
+	\newgeometry{
+		textwidth=\retrotype@textwidth,
+		textheight=\retrotype@textheight,
+		headsep=\baselineskip,
+		footskip=\baselineskip,
+		hmarginratio=1:1,
+		vmarginratio=1:1,
+	}% newgeometry
+}
+\makeatother
+
+% START OF PAGE SETUP
+\defaultGeometry{}
+\AtBeginDocument{\setlength{\parsep}{0pt plus 0pt minus 0pt}}
+\AtBeginDocument{\setlength{\parskip}{0pt plus 0pt minus 0pt}}
+\AtBeginDocument{\setlength{\partopsep}{0pt plus 0pt minus 0pt}}
+\AtBeginDocument{\setlength{\topsep}{0pt plus 0pt minus 0pt}}
+\AtBeginDocument{\setlength{\parindent}{\tabchars\charwidth}}
+\AtBeginDocument{\raggedright}
+\AtBeginDocument{\frenchspacing}
+\RequirePackage{setspace}
+\AtBeginDocument{\singlespacing}
+\AtBeginDocument{\setstretch{1}}
+% END OF PAGE SETUP
+
+% cpl - characters per line
+\newcommand{\cpl}{\pgfmathparse{int(\textwidth/\charwidth)}\pgfmathresult}
+
+% lpp - lines per page
+\newcommand{\lpp}{\pgfmathparse{int(\textheight/\baselineskip)}\pgfmathresult}
+
+% Clear to left page
+\makeatletter
+\newcommand*{\cleartoleftpage}{%
+	\clearpage
+	\if@twoside
+		\ifodd\c@page
+			\hbox{}\thispagestyle{empty}\newpage
+			\if@twocolumn
+				\hbox{}\thispagestyle{empty}\newpage
+			\fi
+		\fi
+	\fi
+}
+\makeatother
+
+
+%%%%%%%%%%%
+% SYMBOLS %
+%%%%%%%%%%%
+
+% dash
+\def\dash{\raisebox{1.15ex}[0pt][0pt]{\_}}
+
+% overline dash
+\def\odash{\raisebox{2.25ex}[0pt][0pt]{\_}}
+
+% tilde
+\def\tld{\~{}}
+
+% backslash
+\def\bs{\textbackslash}
+
+% default line character (\dash)
+\def\thelinechar{\dash}
+
+
+%%%%%%%%
+% TABS %
+%%%%%%%%
+
+\TabPositions{4\charwidth, 8\charwidth,
+12\charwidth, 16\charwidth, 20\charwidth,
+24\charwidth, 28\charwidth, 32\charwidth,
+36\charwidth, 40\charwidth, 44\charwidth,
+48\charwidth, 52\charwidth, 56\charwidth,
+60\charwidth, 64\charwidth, 68\charwidth,
+72\charwidth, 76\charwidth, 80\charwidth,
+84\charwidth, 88\charwidth, 92\charwidth,
+96\charwidth, 100\charwidth}
+
+\def\tabchars{4}
+
+\newlength{\tabwidth}
+\pgfmathsetlength{\tabwidth}{\tabchars\charwidth}
+
+% \tabspace
+% horizontal space equal to the current \tabwidth
+\newcommand{\tabspace}{\hspace*{\tabwidth}}
+
+%\tabn
+% tab to the n-th tab in the current line
+\newcommand{\tabn}[1]{%
+	\newcount\idx
+	\idx=1
+	\loop
+		\tab%
+		\ifnum\idx<#1\advance\idx by 1
+	\repeat
+}
+
+
+% LINES
+
+% \rep{chars}{n}
+% repeat the chars n times
+\newcommand{\rep}[2]{%
+	\foreach \n in {1,...,#2}{#1}%
+}
+
+\makeatletter
+% \strfit{chars}
+% return int number of how many times the chars will fit into the remaining space on the line
+\newlength{\retrotype@strfit@str}
+\newlength{\retrotype@strfit@ln}
+\newcommand{\strfit}[1]{%
+	\settowidth{\retrotype@strfit@str}{#1}%
+	\setlength{\retrotype@strfit@ln}{\linegoal}%
+	%DEBUG1(#1): str[\the\retrotype@strfit@str], ln[\the\retrotype@strfit@ln]\\
+	\pgfmathparse{int(\retrotype@strfit@ln/\retrotype@strfit@str)}%
+	%DEBUG2(\pgfmathresult)\\
+	\pgfmathresult%
+}
+\makeatother
+
+% \linechars[chars]{n}
+% make a line by repeating the chars n times
+\newcommand{\linechars}[2][\thelinechar]{%
+	\noindent%
+	\tabto{\CurrentLineWidth}%
+	\rep{#1}{#2}%
+}
+
+\makeatletter
+% \linecharw[chars]{width}
+% repeat the chars for the given width
+\newlength{\retrotype@linecharw}
+\newcommand{\linecharw}[2][\thelinechar]{%
+	\settowidth\retrotype@linecharw{#1}
+	\pgfmathparse{int(#2/\retrotype@linecharw)}%
+	\tabto{\CurrentLineWidth}%
+	\hspace*{-\charwidth}% offset fix
+	\linechars[#1]{\pgfmathresult}%
+}
+\makeatother
+
+% \linefill[chars]
+% fill the whole line with chars
+\newcommand{\linefill}[1][\thelinechar]{%
+	\tabto{\CurrentLineWidth}%
+	\linecharw[#1]{\dimexpr\linewidth-\TabPrevPos+0.5pt\relax}\par%
+}
+
+
+%%%%%%%%%%%%%%%
+% STACKENGINE %
+%%%%%%%%%%%%%%%
+
+\RequirePackage{stackengine}
+
+% \op{a}{chars}
+\newcommand{\overprint}[2]{%
+	\settowidth{\textwidth}{#2}%
+	\makebox[0pt][l]{#2}%
+	\linecharw[#1]{\textwidth}%
+}
+
+\newcommand{\op}[2]{\overprint{#1}{#2}}
+
+\renewcommand{\underline}[1]{%
+	\op{\_}{#1}%
+}
+
+% \ul{chars}
+\newcommand{\ul}[1]{\underline{#1}}
+
+\renewcommand{\overline}[1]{%
+	\op{\odash}{#1}%
+}
+
+% \ol{chars}
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\strikeout}[1]{%
+	\op{\dash}{#1}%
+}
+
+% \so{chars}
+\newcommand{\so}[1]{\strikeout{#1}}
+
+
+%%%%%%%%%%%%%%
+% FORMATTING %
+%%%%%%%%%%%%%%
+
+% \skipline[\baselineskip]
+% insert a vertical space
+\newcommand{\skipline}[1][\baselineskip]{\vspace*{#1}}
+
+% \rightbox[\parskip]{text}
+% a right-aligned line of text raised by \baselineskip + #1
+% the default #1 is \parskip to put the text on a \paragraph{} line above
+\newcommand{\rightbox}[2][\parskip]{%
+	\def\spc{\dimexpr #1\relax}%
+	\makebox[\linewidth][r]{\raisebox{\baselineskip+\spc}[0pt][0pt]{#2}}\vspace{-\baselineskip}%
+}
+
+% \tabpar[l][r]{text}
+% a single paragraph indented from the left and from the right by l and r characters respectively
+\NewDocumentCommand{\tabpar}{ O{\tabchars} O{0} m }{%
+	\par\noindent%
+	\hspace*{#1\charwidth}\parbox[t]{\linewidth-#1\charwidth-#2\charwidth}{#3\strut}\par
+}
+
+\RequirePackage{changepage}
+
+% \begin{tabbox}[l][r]
+% minipage indented from the left and from the right by l and r characters
+\NewDocumentEnvironment{tabbox}{ s O{\tabchars} O{0} }{%
+	\par\noindent%
+	\IfBooleanTF{#1}{%
+		\begin{adjustwidth*}{#2\charwidth}{#3\charwidth}
+	}{%
+		\begin{adjustwidth}{#2\charwidth}{#3\charwidth}
+	}
+}{%
+	\IfBooleanTF{#1}{%
+		\end{adjustwidth*}%
+	}{%
+		\end{adjustwidth}\par
+	}
+}
+
+% \header[chars][format]{text}
+% text with chars filling the line
+\NewDocumentCommand{\header}{ O{\bfseries} m O{\_} }{%
+	\par{#1 #2}\strut\linefill[#3]%
+}
+
+% \uheader[chars][format]{text}
+% same as \header, with underlined text
+\NewDocumentCommand{\uheader}{ O{\bfseries} m O{\_} }{%
+	\par{\ul{#1{}#2}}\strut\linefill[#3]%
+}
+
+% \begin{headerbox}[format]{header}[top][bottom]
+% text box with a header, surrounded by lines
+\NewDocumentEnvironment{headerbox}{ O{\bfseries} m O{\_} O{\odash} }{%
+	\def\bottomchar{#4}%
+	\par{#1 #2}\strut\linefill[#3]%
+}{%
+	\par\linefill[\bottomchar]%
+}
+
+% \begin{uheaderbox}[format]{header}[top][bottom]
+% same as headerbox, with underlined header
+\NewDocumentEnvironment{uheaderbox}{ O{\bfseries} m O{\_} O{\odash} }{%
+	\def\bottomchar{#4}%
+	\par{\ul{#1{}#2}}\strut\linefill[#3]%
+}{%
+	\par\linefill[\bottomchar]%
+}
+
+% \begin{textbox}[\dash]
+% text box surrounded by top and bottom lines
+\NewDocumentEnvironment{textbox}{ O{\_} O{\odash} }{%
+	\def\bottomchar{#2}%
+	\par\linefill[#1]%
+}{%
+	\par\linefill[\bottomchar]%
+}
+
+
+%%%%%%%
+% TOC %
+%%%%%%%
+
+% Enable for two-column TOC
+%\RequirePackage[toc]{multitoc}
+
+\renewcommand{\contentsname}{CONTENTS}
+
+% \toc[n]
+% print table of contents to the n-th depth
+\newcommand{\toc}[1][1]{%
+	\begingroup
+	\let\cleardoublepage\relax
+	\let\clearpage\relax
+	\hyphenchar\font=-1% disable hyphenation
+	\setcounter{tocdepth}{#1}\tableofcontents
+	\thispagestyle{toc}
+	\hyphenchar\font=`\-% enable hyphenation
+	\endgroup
+}
+
+
+%%%%%%%%%%%%
+% VERBATIM %
+%%%%%%%%%%%%
+
+\RequirePackage{listings}
+
+% \includeverbatim{file}
+% include text file verbatim
+\newcommand{\includeverbatim}[1]{%
+	\lstinputlisting[columns=fixed, keepspaces=true]{#1}
+}
+
+
+%%%%%%%%%%
+% TABLES %
+%%%%%%%%%%
+
+\RequirePackage{tabularx}
+
+%\makeatletter
+%\def\twhline{\multicolumn{\LT@cols}{l}{\linecharw[\textwidth]{-}}\\}
+%\makeatother
+%\newcommand{\twhline}[3]\thelinechar]{\noalign{\multicolumn{#2}{l}{\linecharw[#1]{#3}}\\}}
+
+% Left-aligned column
+\newcolumntype{L}{X}
+% Centered column
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+% Right-aligned column
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+% Separators
+\newcolumntype{|}{@{|}}
+\newcolumntype{-}{@{\dash}}
+\newcolumntype{_}{@{\_}}
+\newcolumntype{^}{@{\odash}}
+\newcolumntype{*}{@{*}}
+\newcolumntype{~}{@{~}}
+
+\NewDocumentEnvironment{retrotable}{ O{LL} O{\linewidth} }{%
+	\gdef\retrotablewidth{#2}
+	\noindent\tabularx{#2}{#1}%
+}{\endtabularx\noindent}
+
+
+%%%%%%%%
+% ENUM %
+%%%%%%%%
+
+\RequirePackage{enumitem}
+\setlist{nosep, leftmargin=\tabwidth}
+\renewcommand{\labelitemi}{*}
+\renewcommand{\labelitemii}{\itshape*}
+\renewcommand{\labelitemiii}{\itshape\textbullet}
+\renewcommand{\labelitemiv}{\bfseries\textbullet}
+
+
+%%%%%%%%%%%%%%
+% SECTIONING %
+%%%%%%%%%%%%%%
+
+% Titles
+\RequirePackage[newlinetospace]{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage[titles]{tocloft}% titles option - do not typeset ToC, LoF, LoT titles
+
+\newlength{\tocstep}
+\setlength{\tocstep}{\tabchars\charwidth}% toc "tabbing" step distance
+
+% hide section and subsection numbers in table of contents, along with corresponding indentation
+\renewcommand{\thechapter}{\arabic{chapter}.}
+\renewcommand\thesection{}
+\renewcommand\thesubsection{}
+
+\makeatletter
+\def\@seccntformat#1{\csname #1ignore\expandafter\endcsname\csname the#1\endcsname\quad}
+\let\sectionignore\@gobbletwo
+\let\latex@numberline\numberline
+\def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
+\makeatother
+
+% chapter
+\titleformat{\chapter}
+	{\normalfont\bfseries\LARGE}{\thechapter\ }{0em}{}
+\titlespacing*{\chapter}{0em}{\parskip}{0ex}
+\def\chapterautorefname{Chapter}
+\titlecontents{chapter}
+	[0em]% left
+	{\bfseries}% above-code
+	{\makebox[\tocstep][l]{\thecontentslabel}}% numbered-entry-format
+	{\makebox[\tocstep][l]{}}% numberless-entry-format
+	{\cftchapleader\quad\contentspage}% filler-page-format
+	[]% below-code
+
+% unnumbered chapter
+\newcommand{\chapterx}[1]{%
+	\chapter*{#1}
+	\markboth{#1}{}
+	\addcontentsline{toc}{chapter}{#1}%
+}
+
+% section
+\titleformat{\section}
+	{\normalfont\bfseries\Large}{\thesection}{0em}{}
+\titlespacing*{\section}{0em}{\parskip}{0ex}
+\titlecontents{section}
+	[0pt]% left
+	{}% above-code
+	{\thecontentslabel}% numbered-entry-format
+	{}% numberless-entry-format
+	{\cftsecleader\quad\contentspage}% filler-page-format
+	[]% below-code
+
+% subsection
+\titleformat{\subsection}
+	{\normalfont\bfseries\large}{\thesubsection}{0em}{}
+\titlespacing*{\subsection}{0em}{\parskip}{0ex}
+\titlecontents{subsection}
+	[\dimexpr 4\charwidth\relax]% left
+	{}% above-code
+	{\thecontentslabel}% numbered-entry-format
+	{}% numberless-entry-format
+	{\cftsubsecleader\quad\contentspage}% filler-page-format
+	[]% below-code
+
+% subsubsection
+\titleformat{\subsubsection}
+	{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}[]
+\titlespacing*{\subsubsection}{0em}{\parskip}{0ex}
+\titlecontents{subsubsection}
+	[\dimexpr 8\charwidth\relax]% left
+	{}% above-code
+	{\thecontentslabel}% numbered-entry-format
+	{}% numberless-entry-format
+	{\cftsubsubsecleader\quad\contentspage}% filler-page-format
+	[]% below-code
+
+% paragraph
+\titleformat{\paragraph}
+	{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}[]
+\titlespacing*{\paragraph}{0em}{\parskip}{0ex}
+	\titlecontents{paragraph}
+	[\dimexpr 12\charwidth\relax]% left
+	{}% above-code
+	{\thecontentslabel}% numbered-entry-format
+	{}% numberless-entry-format
+	{\cftparaleader\quad\contentspage}% filler-page-format
+	[]% below-code
+
+% subparagraph
+\titleformat{\subparagraph}[runin]
+	{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}[]
+\titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
+\titlecontents{subparagraph}
+	[\dimexpr 16\charwidth\relax]% left
+	{}% above-code
+	{\thecontentslabel}% numbered-entry-format
+	{}% numberless-entry-format
+	{\cftsubparaleader\quad\contentspage}% filler-page-format
+	[]% below-code
+
+
+%%%%%%%%%%%%
+% FANCYHDR %
+%%%%%%%%%%%%
+
+\RequirePackage{fancyhdr}
+
+\renewcommand{\headrule}{
+	\parbox[t]{\textwidth}{\linefill[\odash]}
+}
+
+% define fancy page style
+\fancypagestyle{fancy}{%
+	\fancyhf{}% clear headers and footers
+	
+	\fancyhead[LE,RO]{%
+		{\nouppercase{\leftmark}}%
+	}
+	\fancyhead[LO,RE]{%
+		{\title}%
+	}
+	\fancyfoot[LE]{%
+		{\centering\thepage}
+	}
+	\fancyfoot[RO]{%
+		{\centering\thepage}
+	}
+}
+
+% toc page style
+\fancypagestyle{toc}{%
+	\fancyhf{}% clear headers and footers
+	\fancyhead[LO,RE]{{\title}}
+}
+
+\fancypagestyle{plain}{}% redefine plain page style
+\pagestyle{fancy}% set fancy page style
+
+% Change chaptermark
+\renewcommand{\chaptermark}[1]{%
+	\markboth{\chaptername\ \thechapter\ #1}{}%
+}
+
+
+%%%%%%%%%%
+% IMAGES %
+%%%%%%%%%%
+
+% BLEND MODES:
+% normal
+% multiply
+% screen
+% overlay
+% darken
+% lighten
+% color dodge
+% color burn
+% hard light
+% soft light
+% difference
+% exclusion
+% hue
+% saturation
+% color
+% luminosity
+
+% shortcuts
+\newcommand{\addBg}[1]{\AddToShipoutPictureBG{#1}}
+\newcommand{\addFg}[1]{\AddToShipoutPictureFG{#1}}
+\newcommand{\clearBg}{\ClearShipoutPictureBG{}}
+\newcommand{\clearFg}{\ClearShipoutPictureFG{}}
+
+% \pageFill[opacity][blend]{color}
+%
+% #1	(optional) color opacity (default = 1.0)
+% #2	(optional) blend mode (default = mormal)
+% #3	color
+%
+\NewDocumentCommand{\pageFill}{ O{1.0} O{normal} m }{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\begin{scope}[blend mode=#2]
+			\fill[#3, opacity=#1] (current page.south west) rectangle (current page.north east);
+		\end{scope}
+	\end{tikzpicture}
+}
+
+\newsavebox{\ImgBox}
+\newlength{\ImgW}
+\newlength{\ImgH}
+\newlength{\ImgX}
+\newlength{\ImgY}
+
+% \pageCenter[opacity][blend]{file}[scale]
+%
+% #1	(optional)	opacity (default = 1.0)
+% #2	(optional)	blend mode (default = normal)
+% #3	image file
+% #4	(optional)	scale (default = 1.0)
+%
+\NewDocumentCommand{\pageCenter}{ O{1.0} O{normal} m O{1.0} }{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\begin{scope}[opacity=#1, blend mode=#2]
+			\node[inner sep=0pt] at (current page.center)
+			{\includegraphics[scale=#4]{#3}};
+		\end{scope}
+	\end{tikzpicture}
+}
+
+% \pageStretch[opacity][blend]{file}[ratio]
+%
+% #1	(optional)	opacity (default = 1.0)
+% #2	(optional)	blend mode (default = normal)
+% #3	image file
+% #4	(optional)	keep aspect ratio (default = 1, make 0 to ignore)
+%
+\NewDocumentCommand{\pageStretch}{ O{1.0} O{normal} m O{1} }{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\begin{scope}[opacity=#1, blend mode=#2]
+			\node[inner sep=0pt] at (current page.center)
+			{%
+				\if1#4%
+					\includegraphics[width=\pdfpagewidth,height=\pdfpageheight,keepaspectratio]{#3}
+				\else%
+					\includegraphics[width=\pdfpagewidth,height=\pdfpageheight]{#3}
+				\fi
+			};
+		\end{scope}
+	\end{tikzpicture}
+}
+
+\newcommand{\setTileOffsetLength}[3]{%
+	\pgfmathsetlength{#1}{- #3 + mod(#2, #3) / 2}%
+}
+
+% \pageTiles[opacity][blend]{file}[scale]
+%
+% #1	(optional)	opacity (default = 1.0)
+% #2	(optional)	blend mode (default = normal)
+% #3	image file
+% #4	(optional)	scale (default = 1.0)
+%
+\NewDocumentCommand{\pageTiles}{ O{1.0} O{normal} m O{1.0} }{%
+	% load image
+	\sbox{\ImgBox}{\includegraphics[scale=#4]{#3}}
+	% get image dimensions
+	\settowidth{\ImgW}{\usebox{\ImgBox}}%
+	\settoheight{\ImgH}{\usebox{\ImgBox}}%
+	% set initial drawing coordinates and draw tiles
+	\setTileOffsetLength{\ImgY}{\paperheight}{\ImgH}%
+	%
+	\begin{tikzpicture}[remember picture,overlay]
+		\begin{scope}[opacity=#1, blend mode=#2]
+			\whiledo{\lengthtest{\ImgY < \paperheight}}{%
+				\setTileOffsetLength{\ImgX}{\paperwidth}{\ImgW}%
+				\whiledo{\lengthtest{\ImgX < \paperwidth}}{%
+					\put(\ImgX\@gobble, \ImgY\@gobble){%
+						\includegraphics[width=\ImgW,height=\ImgH]{#3}
+					}%
+					\pgfmathaddtolength{\ImgX}{\ImgW}
+				}% whiledo X
+				\pgfmathaddtolength{\ImgY}{\ImgH}
+			}% whiledo Y
+		\end{scope}
+	\end{tikzpicture}
+}

@@ -1,0 +1,688 @@
+% !TeX program = xelatex
+\documentclass[english,12pt,openany,letterpaper]{book}
+\usepackage{babel}
+\usepackage{retrotype}
+\usepackage{lipsum}
+\usepackage{adjustbox}
+\usepackage{layouts}
+
+% HYPERSETUP
+
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+\def\title{Retrotype Guide}
+\def\author{Vladar}
+\def\license{Creative Commons Attribution-ShareAlike (CC BY-SA 4.0)}
+\def\licenselink{https://creativecommons.org/licenses/by-sa/4.0/}
+\def\rtVer{0.1}
+\def\rtDate{2024-06-14}
+
+\hypersetup{%
+	pdfborderstyle={/S/U/W 1},% underlined hyperlinks
+	bookmarksdepth=5,% paragraph level depth bookmarks
+	pdftitle={\title},
+	pdfauthor={\author},
+	%pdfkeywords={\keywords},
+}
+
+\begin{document}
+
+\addBg{\pageTiles{img/grain.jpg}}
+\addBg{\pageFill[0.2]{cyan}}
+
+\begin{titlepage}
+
+\begin{verbatim}
+________________________________________________________________________
+             _____      _             _                                 
+            |  __ \    | |           | |                                
+            | |__) |___| |_ _ __ ___ | |_ _   _ _ __   ___              
+            |  _  // _ \ __| '__/ _ \| __| | | | '_ \ / _ \             
+            | | \ \  __/ |_| | | (_) | |_| |_| | |_) |  __/             
+            |_|  \_\___|\__|_|  \___/ \__|\__, | .__/ \___|             
+                                           __/ | |
+__________________________________________|___/|_|______________________
+\end{verbatim}
+
+{\hfill v\rtVer~(\rtDate)}
+
+\vfill
+
+\begin{adjustbox}{center}
+	\includeverbatim{img/dragon.txt}
+\end{adjustbox}
+
+\vfill
+\vfill
+
+{\hfill\license\hfill}
+
+{\hfill\href{\licenselink}{(\licenselink)}\hfill}
+
+{\hfill{}by \author{} (\href{https://vladar.bearblog.dev}{vladar.bearblog.dev})\hfill}
+
+\end{titlepage}
+
+\toc[3]
+
+\chapter{Retrotype}
+
+\clearBg
+\clearFg
+
+\rightbox{{\Large\itshape \rtDate}}
+
+\skipline
+
+\section{The Objective}
+
+Retrotype aims to replicate the look of old typewriter-made documents while keeping as many benefits of LaTeX as possible.
+
+\skipline
+
+\section{The Implementation}
+
+The most important part of achieving the objective is an appropriate font. \textbf{TT2020 font} (\href{https://copypaste.wtf/TT2020/}{copypaste.wtf/TT2020}) fits the goal perfectly and has 10 variants of each glyph to imitate the natural randomness of a real typewriter. The default font family is also set to monospace.
+
+\tab To use this custom font, \textbf{XeTeX} (\href{https://xetex.sourceforge.net/}{xetex.sourceforge.net}) is required due to its \href{https://ctan.org/pkg/fontspec}{fontspec} capabilities. If you use \href{https://www.texstudio.org/}{TeXstudio}, you just need to have these lines at the start of your project:
+
+\begin{tabbox}[8][8]
+\begin{textbox}
+~\% !TeX program = xelatex
+
+~\bs documentclass[english,12pt,openany,letterpaper]\{book\}
+
+~\bs usepackage\{babel\}
+
+~\bs usepackage\{retrotype\}
+\end{textbox}
+\end{tabbox}
+
+\section{Roadmap}
+
+\begin{itemize}
+	\item v0.1 \dash\ (current state) initial public testing release;
+	\item improving existing features and adding new ones if needed;
+	\item v0.9 \dash\ all features complete, debugging and testing;
+	\item v1.0 \dash\ release.
+\end{itemize}
+
+\skipline
+
+\section{Links}
+
+\begin{itemize}
+	\item \href{https://github.com/Vladar4/retrotype}{github.com/Vladar4/retrotype} \dash\ project's GitHub page;
+	\item \href{https://vladar.bearblog.dev}{vladar.bearblog.dev} \dash\ author's blog.
+\end{itemize}
+
+\skipline
+
+\paragraph{Resources used:}
+\begin{itemize}
+	\item \href{https://textkool.com/en/ascii-art-generator?font=Big&text=Retrotype}{textkool.com/en/ascii-art-generator?font=Big} \dash\ title text art;
+	\item \href{https://www.asciiart.eu/mythology/dragons}{www.asciiart.eu/mythology/dragons} \dash\ dragon cover art;
+	\item \href{https://www.publicdomainpictures.net/en/view-image.php?image=166303}{www.publicdomainpictures.net} \dash\ typewriter image;
+	\item \href{https://lostandtaken.com/}{lostandtaken.com} \dash\ paper textures;
+	\item \href{https://archive.org/details/Artyping}{archive.org/details/Artyping} \dash\  ``Artyping'' book by Julius Nelson.
+\end{itemize}
+
+\break
+
+
+\section{Page Layouts}
+
+While you can set up any custom layouts using the \bs newgeometry command (see the \href{https://www.ctan.org/pkg/geometry}{geometry} package), the following setups were fine-tuned:
+\begin{itemize}
+	\item Letter paper (8.5 x 11 in)
+	\begin{itemize}
+		\item 10pt font \dash\ 86 characters per line, 51 lines per page
+		\item 11pt font \dash\ 80 characters per line, 45 lines per page
+		\item 12pt font \dash\ 72 characters per line, 42 lines per page
+	\end{itemize}
+	\item Legal paper (8.5 x 14 in)
+	\begin{itemize}
+		\item 10pt font \dash\ 86 characters per line, 65 lines per page
+		\item 80pt font \dash\ 80 characters per line, 58 lines per page
+		\item 12pt font \dash\ 72 characters per line, 54 lines per page
+	\end{itemize}
+	\item Executive paper (7.25 x 10.5 in)
+	\begin{itemize}
+		\item 10pt font \dash\ 74 characters per line, 49 lines per page
+		\item 11pt font \dash\ 68 characters per line, 43 lines per page
+		\item 12pt font \dash\ 60 characters per line, 40 lines per page
+	\end{itemize}
+	\item A4 paper (210 x 297 mm)
+	\begin{itemize}
+		\item 10pt font \dash\ 84 characters per line, 55 lines per page
+		\item 11pt font \dash\ 76 characters per line, 48 lines per page
+		\item 12pt font \dash\ 70 characters per line, 45 lines per page
+	\end{itemize}
+	\item A5 paper (148 x 210 mm)
+	\begin{itemize}
+		\item 10pt font \dash\ 59 characters per line, 38 lines per page
+		\item 11pt font \dash\ 54 characters per line, 34 lines per page
+		\item 12pt font \dash\ 49 characters per line, 32 lines per page
+	\end{itemize}
+\end{itemize}
+
+\skipline
+
+\section{Current Dimensions}
+
+\newcommand{\curdim}[1]{\printinunitsof{pt}\prntlen{#1} & \printinunitsof{pc}\prntlen{#1} & \printinunitsof{mm}\prntlen{#1} & \printinunitsof{in}\prntlen{#1}}
+
+\begin{retrotable}[lLLLL]
+	Page width & \curdim{\pdfpagewidth} \\
+	Page height & \curdim{\pdfpageheight} \\
+	Text width & \curdim{\textwidth} \\
+	Char width & \curdim{\charwidth} \\
+	Baseline skip & \curdim{\baselineskip} \\
+	Page layout & \pagelayout \\
+	Font size & \docfontsizeInt \\
+	Chars per line & \cpl \\
+	Lines per page & \lpp \\
+\end{retrotable}
+
+~Page/Text width ratio:~ \pgfmathparse{\pdfpagewidth/\textwidth}\pgfmathresult
+
+~Page/Text height ratio: \pgfmathparse{\pdfpageheight/\textheight}\pgfmathresult
+
+\skipline
+
+\paragraph{Tabs}
+
+tab~1~~~2~~~3~~~4~~~5~~~6~~~7~~~8~~~9~~~10~~11~~12~~13~~14~~15~~16~~17
+v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
+0...4...8...12..16..20..24..28..32..36..40..44..48..52..56..60..64..68..
+
+\break
+
+\section{Package Reference}
+
+\subsection{New Lengths}
+
+\skipline
+
+\subparagraph{\bs charwidth} \dash\ character width (currently \the\charwidth).
+
+\subparagraph{\bs docfontsize} \dash\ document font size dimension (currently \the\docfontsize).
+
+\subparagraph{\bs docfontsizeInt} \dash\ returns document font size (currently \docfontsizeInt).
+
+\subparagraph{\bs tabwidth} \dash\ width of a tab (currently \the\tabwidth), see \textbf{Tabs} below.
+
+\skipline
+
+\subsection{New Commands}
+
+\skipline
+
+\subsubsection{Page}
+
+\subparagraph{\bs pagelayout} \dash\ document page layout (Letter, A4, A5, undefined).
+\subparagraph{\bs defaultGeometry} \dash\ reset to page geometry. Called automatically.
+\subparagraph{\bs cpl} \dash\ characters per line (currently \cpl).
+
+\subparagraph{\bs lpp} \dash\ lines per page (currently \lpp).
+
+\subparagraph{\bs cleartoleftpage} \dash\ clear to left page (new spread).
+
+\skipline
+
+\subsubsection{Symbols}
+
+\subparagraph{\bs dash} \dash\ dash (\dash).
+
+\subparagraph{\bs odash} \dash\ overline dash (\odash).
+
+\subparagraph{\bs tld} \dash\ tilde (\tld).
+
+\subparagraph{\bs bs} \dash\ backslash (\bs).
+
+\subparagraph{\bs thelinechar} \dash\ the default line character (\bs dash by default).
+
+\skipline
+
+\subsubsection{Tabs}
+
+\subparagraph{\bs tab} \dash\ go to the next tab in the current line.
+
+\subparagraph{\bs tabn\{n\}} \dash\ tab to the \textbf{n}-th tab on the current line.
+
+\subparagraph{\bs tabspace} \dash\ inserts horizontal space equal to the current \bs tabwidth.
+
+\subparagraph{\bs tabchars} \dash\ tab distance in characters (\tabchars). To change this, you will also need to set up new \bs TabPositions (see the \href{https://www.ctan.org/pkg/tabto-ltx}{tabto} package).
+
+
+\break
+
+
+\subsubsection{Repeats and Lines}
+
+\subparagraph{\bs rep\{chars\}\{n\}} \dash\ repeat the \textbf{chars} \textbf{n} times.
+
+\subparagraph{\bs linechars[chars]\{n\}} \dash\ make a line by repeating the \textbf{chars} \textbf{n} times
+\\\tab(\textbf{chars} = \bs thelinechar by default).
+
+\subparagraph{\bs linecharw[chars]\{width\}} \dash\ repeat the \textbf{chars} for the given \textbf{width}
+\\\tab(\textbf{chars} = \bs thelinechar by default).
+
+\subparagraph{\bs linefill[chars]} \dash\ fill the whole line with \textbf{chars}
+\\\tab(\textbf{chars} = \bs thelinechar by default).
+
+\subparagraph{\bs linegoal} \dash\ the length of the remainder of the line
+\\\tab(see the \href{https://www.ctan.org/pkg/linegoal}{linegoal} package).
+
+\subparagraph{\bs strfit\{chars\}} \dash\ return int number of how many times the \textbf{chars} will fit into the remaining space on the line.
+
+\skipline
+
+\paragraph{Examples}
+
+\bs rep\{Repeat \}\{10\}
+
+\rep{Repeat }{10}
+
+\skipline
+
+\bs linechars[A]\{16\}
+
+\linechars[A]{16}
+
+\skipline
+
+\bs linecharw[*]\{0.5\bs linewidth\}
+
+\linecharw[*]{0.5\linewidth}
+
+\skipline
+
+\bs linefill
+
+\linefill
+
+\skipline
+
+\bs linefill[-]
+
+\linefill[-]
+
+\skipline
+
+\bs the\bs linegoal \dash\ the remaining space is \the\linegoal.
+
+\skipline
+
+\bs strfit\{abc\} \dash\ You can fit the ``abc'' text this much times: \strfit{abc}.
+
+
+\break
+
+
+\subsubsection{Stackengine}
+
+Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengine}{stackengine} package to simulate the overprinting of one character on top of another \dash\ a typewriting technique for creating new characters and graphic design elements.
+
+\subparagraph{\bs overprint\{a\}\{chars\}} \dash\ same as
+
+\subparagraph{\tabspace\bs op\{a\}\{chars\}} \dash\ overprint \textbf{a} on top of all \textbf{chars}.
+
+\subparagraph{\bs underline\{chars\}} \dash\ same as
+
+\subparagraph{\tabspace\bs ul\{chars\}} \dash\ underline given \textbf{chars}.
+
+\subparagraph{\bs overline\{chars\}} \dash\ same as
+
+\subparagraph{\tabspace\bs ol\{chars\}} \dash\ overline given \textbf{chars}.
+
+\subparagraph{\bs strikeout\{chars\}} \dash\ same as
+
+\subparagraph{\tabspace\bs so\{chars\}} \dash\ strikeout given \textbf{chars}.
+
+\skipline
+
+\paragraph{Examples}
+
+\begin{itemize}
+	\item normal text
+	\item \textbf{\bs textbf\{\ldots\}}
+	\item {\bfseries \{\bs bfseries \ldots\}}
+	\item \strong{\bs strong\{\ldots\}}
+	\item \textit{\bs textit\{\ldots\}}
+	\item {\itshape \{\bs itshape \ldots\}}
+	\item \emph{\bs emph\{\ldots\}}
+	\item {\em \{\bs em \ldots\}}
+	
+	\item \op{|}{\bs op\{|\}\{\ldots\}} \tab\bs op\{|\}\{\ldots\} \textit{(\bs overprint)}
+	\item \ol{\bs ol\{\ldots\}} \tab\tab\bs ol\{\ldots\} \textit{(\bs overline)}
+	\item \ul{\bs ul\{\ldots\}} \tab\tab\bs ul\{\ldots\} \textit{(\bs underline)}
+	\item \so{\bs so\{\ldots\}} \tab\tab\bs so\{\ldots\} \textit{(\bs strikeout)}
+\end{itemize}
+
+\skipline
+
+\bs linefill[\bs op\{<\}\{>\}]
+
+\linefill[\op{<}{>}]
+
+\skipline
+
+\bs linefill[\bs ol\{\bs ul\{\tld\}\}/]
+
+\linefill[\ol{\ul{~}}/]
+
+\skipline
+
+\bs linefill[\bs ol\{\bs ul\{\bs op\{/\}\{\bs bs\}\}\}\}]
+
+\linefill[{\ol{\ul{\op{/}{\bs}}}}]
+
+\skipline
+
+\bs linefill[\bs op\{\bs dash\}\{\bs op\{(\}\{)\}\}]
+
+\linefill[\op{\dash}{\op{(}{)}}]
+
+\break
+
+
+\subsubsection{Formatting}
+
+\subparagraph{\bs skipline[height]} \dash\ insert a vertical space (\bs baselineskip by default).
+
+\subparagraph{\bs rightbox[height]\{text\}} \dash\ a right-aligned line of  \textbf{text} raised by \bs baselineskip + height. The default height is \bs parskip to put the text on a \bs paragraph\{\} line above.
+
+\subparagraph{\bs tabpar[l][r]\{text\}} \dash\ a single paragraph indented from the \textbf{l}eft and \textbf{r}ight by \textbf{l} and \textbf{r} characters (\textbf{l} = \bs tabchars (\tabchars), \textbf{r} = 0 by default).
+
+\subparagraph{\{tabbox\}[l][r]} environment \dash\ \textbf{text} indented from the \textbf{l}eft and \textbf{r}ight by \textbf{l} and \textbf{r} characters respectively (\textbf{l} = \bs tabchars (\tabchars) and \textbf{r} = 0 by default). \textbf{\{tabbox\}*[l][r]} version switches the values between odd and even pages.
+
+\subparagraph{\bs header[chars][format]\{text\}} \dash\ \textbf{text} with \textbf{chars} filling the line
+\\(\textbf{chars} = \bs\_, \textbf{format} = \bs bfseries by default). Not a sectioning element.
+
+\subparagraph{\bs uheader[chars][format]\{text\}} \dash\ same as \textbf{\bs header}, with \textbf{text} underlined.
+
+\subparagraph{\{headerbox\}[format]\{header\}[top][bottom]} environment \dash\ text box with a~\textbf{header}, surrounded by lines (\textbf{top} = \bs\_, \textbf{bottom} = \bs odash by default).
+
+\subparagraph{\{uheaderbox\}[format]\{header\}[top][bottom]} environment \dash\ same as \textbf{\{headerbox\}}, with \textbf{header} underlined.
+
+\subparagraph{\{textbox\}[top][bottom]} environment \dash\ text box surrounded by top and bottom lines (\textbf{top} = \bs\_ and \textbf{bottom} = \bs odash by default).
+
+\skipline
+
+\paragraph{Examples}
+
+\rightbox{\bs rightbox\{Right-aligned text.\}}
+
+\bs tabpar[6][6]\{\bs lipsum[66]\}
+\\\textbf{or} \bs begin\{tabbox\}[6][6] \bs lipsum[66] \bs end\{tabbox\}
+
+\tabpar[6][6]{Nunc sed pede. Praesent vitae lectus. Praesent neque justo,
+	vehicula eget, interdum id, facilisis et, nibh. Phasellus
+	at purus et libero lacinia dictum. Fusce aliquet. Nulla eu
+	ante placerat leo semper dictum. Mauris metus. Curabitur
+	lobortis. Curabitur sollicitudin hendrerit nunc.}
+
+\header{header title}
+
+\bs header\{header title\}
+
+\skipline
+
+\uheader{uheader title}
+
+\bs uheader\{header title\}
+
+\skipline
+
+%\begin{headerbox}[\normalfont\ul]{{\textbf{header box title}}}
+\begin{uheaderbox}{\textbf{box title}}
+	\bs begin\{headerbox\}[\bs normalfont\bs ul]\{\{\bs textbf\{box title\}\}\} ... \bs end\{headerbox\}
+	\\\textbf{or}
+	\bs begin\{uheaderbox\}\{box title\} ... \bs end\{uheaderbox\}
+\end{uheaderbox}
+
+\begin{textbox}
+	\bs begin\{textbox\} ... \bs end\{textbox\}
+\end{textbox}
+
+\break
+
+
+\subsubsection{Retrotable}
+
+A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
+
+\begin{tabbox}[4][4]
+	\begin{headerbox}{NOTE:}
+		Work in progress.
+		
+		There should be an easier way to implement the horizontal lines than using the \bs multicolumn hack (see the \textbf{Examples}).
+	\end{headerbox}
+\end{tabbox}
+
+\bs begin\{retrotable\}[columns][width]
+
+\tab ...
+
+\bs end\{retrotable\}
+
+(width is \bs linewidth by default)
+
+\skipline
+
+\paragraph{New column types}
+
+\begin{itemize}
+	\item L left-aligned expandable column (same as X from tabularx)
+	\item C centered expandable column
+	\item R right-aligned expandable column
+	\item | vertical separator
+	\item \_ top line (underline: \_ )
+	\item - middle line (dash: \dash{} )
+	\item \^{} bottom line (overline: \ol{~} )
+	\item * asterisk
+	\item \~{} empty space
+\end{itemize}
+
+\skipline
+
+\paragraph{Examples}
+
+\begin{verbatim}
+\begin{retrotable}[|C|L|R|][0.5\linewidth]
+    \multicolumn{3}{_l_}{\linecharw[\_]{0.5\linewidth}}\\
+    Center & Left & Right \\
+    1 & 2 & 2 \\
+    4 & 5 & 6 \\
+    \multicolumn{3}{^l^}{\linecharw[\odash]{0.5\linewidth}}\\
+\end{retrotable}
+\end{verbatim}
+
+\begin{retrotable}[|C|L|R|][0.5\linewidth]
+	\multicolumn{3}{_l_}{\linecharw[\_]{0.5\linewidth}}\\
+	Center & Left & Right \\
+	1 & 2 & 2 \\
+	4 & 5 & 6 \\
+	\multicolumn{3}{^l^}{\linecharw[\odash]{0.5\linewidth}}\\
+\end{retrotable}
+
+
+\vfill
+\break
+
+
+\subsubsection{Table of Contents}
+
+\begin{tabbox}[4][4]
+	\begin{headerbox}{multitoc}
+		To make your table of contents two-column, use this package:
+		
+		\bs usepackage[toc]\{multitoc\}
+	\end{headerbox}
+\end{tabbox}
+
+\subparagraph{\bs toc[n]} \dash\ print table of contents to the \textbf{n}-th depth.
+
+\skipline
+
+\subsubsection{Verbatim}
+
+\subparagraph{\bs includeverbatim\{file\}} \dash\ include text file verbatim.
+
+\skipline
+
+All commands of the \href{https://www.ctan.org/pkg/listings}{listings} package (e.g. the \textbf{\{verbatim\}} environment) are also available by default.
+
+\break
+
+\subsubsection{Background and Foreground}
+
+\subparagraph{\bs addBg\{code\}} \dash\ add \textbf{code} to the background picture.
+
+\subparagraph{\bs addFg\{code\}} \dash\ add \textbf{code} to the foreground picture.
+
+\subparagraph{\bs clearBg} \dash\ clear the background picture.
+
+\subparagraph{\bs clearFg} \dash\ clear the foreground picture.
+
+\skipline
+
+\paragraph{Commands}
+
+\subparagraph{\bs pageFill[opacity][blend]\{color\}} \dash\ fill the page with the given color:
+\begin{itemize}
+	\item \textbf{opacity} \dash\ color opacity (1.0 by default);
+	\item \textbf{blend} \dash\ color blend mode (normal by default);
+	\item \textbf{color} \dash\ color to fill the page with.
+\end{itemize}
+
+\subparagraph{\bs pageCenter[opacity][blend]\{file\}[scale]} \dash\ image centered on the page:
+\begin{itemize}
+	\item \textbf{opacity} \dash\ image opacity (1.0 by default);
+	\item \textbf{blend} \dash\ image blend mode (normal by default);
+	\item \textbf{file} \dash\ image file name;
+	\item \textbf{scale} \dash\ image scale (1.0 by default).
+\end{itemize}
+
+\subparagraph{\bs pageStretch[opacity][blend]\{file\}[ratio]} \dash\ image stretched over the page:
+\begin{itemize}
+	\item \textbf{opacity} \dash\ image opacity (1.0 by default);
+	\item \textbf{blend} \dash\ image blend mode (normal by default);
+	\item \textbf{file} \dash\ image file name;
+	\item \textbf{ratio} \dash\ keep aspect ratio (default = 1, make 0 to ignore).
+\end{itemize}
+
+\subparagraph{\bs pageTiles[opacity][blend]\{file\}[scale]} \dash\ tile the image over the page:
+\begin{itemize}
+	\item \textbf{opacity} \dash\ image opacity (1.0 by default);
+	\item \textbf{blend} \dash\ image blend mode (normal by default);
+	\item \textbf{file} \dash\ image file name;
+	\item \textbf{scale} \dash\ image scale (1.0 by default).
+\end{itemize}
+
+\skipline
+
+\begin{headerbox}{Blend modes}
+\vspace*{-\baselineskip}\noindent\begin{multicols}{4}
+	\begin{enumerate}
+		\item normal
+		\item multiply
+		\item screen
+		\item overlay
+		\item darken
+		\item lighten
+		\item color dodge
+		\item color burn
+		\item hard light
+		\item soft light
+		\item difference
+		\item exclusion
+		\item hue
+		\item saturation
+		\item color
+		\item luminosity
+	\end{enumerate}
+\end{multicols}
+\vspace*{0.5ex-2\baselineskip}~
+\end{headerbox}
+
+\skipline
+
+\paragraph{Examples}
+
+\bs addBg\{\bs pageTiles\{img/grain.jpg\}\}
+
+\bs addBg\{\bs pageFill[0.2]\{cyan\}\}
+
+\bs addFg\{\bs pageCenter[0.15][multiply]\{img/typewriter.png\}[0.5]\}
+
+\addBg{\pageTiles{img/grain.jpg}}
+\addBg{\pageFill[0.2]{cyan}}
+\addFg{\pageCenter[0.15][multiply]{img/typewriter.png}[0.5]}
+
+
+\twocolumn
+
+\clearFg
+
+\chapter{Demonstration}
+
+\subsection{1. Bridge}
+
+An old stone bridge over the moat. Moss and lichen growing between crumbling stonework. A large stone gatehouse stands at the opposing side of the bridge.
+
+\subsection{2. Gatehouse}
+
+The main entrance to the castle \dash\ two square towers with a gate and portcullis between them. Some old crates and barrels are piled near the entrance. On either side of the gate, there are small arrow slits in the tower walls.
+
+\tab A group of goblins is hiding behind crates and barrels near the gate. The goblins are armed with short swords and small shields and are on the lookout for intruders.
+
+
+\header{Goblins (2d4)}
+AC 5; HD 1-1 (S); hp 4 each; MV 90' (30'); \#AT 1 short sword; D 1d6; Save NM; Int 9; ML 7; AL C; XP 5 each; THAC0 19.
+\\Treasure: 2d6 ep each.
+
+\subsection{3. Gatehouse Towers}
+
+The gatehouse towers' interior is dimly lit, with narrow stone staircases winding up the square towers to the top.
+
+\subsection{4. Castle Wall}
+
+A sturdy stone wall surrounds the entire castle. Four square towers stand at the corners. The moat encircles the wall, making its effective height even taller.
+
+\break
+
+\subsection{5. Castle Towers}
+
+Square towers at the corners of the wall provide a clear view of the surrounding area. Heavy wooden doors open to the top of the castle wall. A wooden ladder leads to the top of each tower.
+
+\subsubsection{5a) North-West Tower}
+
+A group of goblins is lounging inside the tower. They can easily be taken by surprise.
+
+\header{Goblins (2d4)}
+AC 6; HD 1-1 (S); hp 4 each; MV 90' (30'); \#AT 1 short sword; D 1d6; Save NM; Int 9; ML 7; AL C; XP 5 each; THAC0 19.
+\\Treasure: 2d6 ep each.
+
+\subsubsection{5b) North-East Tower}
+
+This tower is empty, with nothing of note inside.
+
+\subsubsection{5c) South-West Tower}
+
+A group of orcs will attack the party on sight.
+
+\header{Orcs (2d4)}
+AC 6; HD 1 (M); hp 5 each; MV 120' (40'); \#AT 1 scimitar; D 1d8; Save F1; Int 7; ML 8; XP 10; THAC0 19.
+\\Treasure: 3d8 cp each.
+
+\subsubsection{5d) South-East Tower}
+
+The floor at the top of the tower is weak and has a 1-in-6 chance of collapsing if anyone steps on it. The risk of collapse increases by 1 per each additional human-sized creature standing there. The fall deals 1d6 damage.
+
+\clearpage
+
+
+\end{document}

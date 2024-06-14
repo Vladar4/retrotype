@@ -1,0 +1,11 @@
+\defaultfontfeatures[TT2020]
+{
+    Path = fonts/ ,
+    Extension = .ttf ,
+    UprightFont     = Tt2020StyleE ,
+    ItalicFont      = Tt2020StyleEItalic ,
+    BoldFont        = Tt2020StyleB ,
+    BoldItalicFont  = Tt2020StyleBItalic ,
+    Mapping         = tex-text ,
+    Ligatures       = CommonOff ,
+}
