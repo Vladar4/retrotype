@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/06/14]
+\ProvidesPackage{retrotype}[2024/06/17]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -275,12 +275,16 @@
 
 \RequirePackage{stackengine}
 
+\makeatletter
+\newlength{\retrotype@strwidth}
+
 % \op{a}{chars}
 \newcommand{\overprint}[2]{%
-	\settowidth{\textwidth}{#2}%
+	\settowidth{\retrotype@strwidth}{#2}%
 	\makebox[0pt][l]{#2}%
-	\linecharw[#1]{\textwidth}%
+	\linecharw[#1]{\retrotype@strwidth}%
 }
+\makeatother
 
 \newcommand{\op}[2]{\overprint{#1}{#2}}
 
@@ -491,9 +495,41 @@
 \def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
 \makeatother
 
+% set all titles' font size to \normalsize
+\newcommand{\smalltitles}{%
+	\titleformat{\chapter}
+		{\normalfont\bfseries\normalsize}{\thechapter\ }{0em}{}
+	\titleformat{\section}
+		{\normalfont\bfseries\normalsize}{\thesection}{0em}{}
+	\titleformat{\subsection}
+		{\normalfont\bfseries\normalsize}{\thesubsection}{0em}{}
+	\titleformat{\subsubsection}
+		{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}
+	\titleformat{\paragraph}
+		{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}
+	\titleformat{\subparagraph}[runin]
+		{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}
+}
+
+% set varying font sizes for the titles (the default)
+\newcommand{\largetitles}{%
+	\titleformat{\chapter}
+		{\normalfont\bfseries\LARGE}{\thechapter\ }{0em}{}
+	\titleformat{\section}
+		{\normalfont\bfseries\Large}{\thesection}{0em}{}
+	\titleformat{\subsection}
+		{\normalfont\bfseries\large}{\thesubsection}{0em}{}
+	\titleformat{\subsubsection}
+		{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}
+	\titleformat{\paragraph}
+		{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}
+	\titleformat{\subparagraph}[runin]
+		{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}
+}
+
+\largetitles{}
+
 % chapter
-\titleformat{\chapter}
-	{\normalfont\bfseries\LARGE}{\thechapter\ }{0em}{}
 \titlespacing*{\chapter}{0em}{\parskip}{0ex}
 \def\chapterautorefname{Chapter}
 \titlecontents{chapter}
@@ -512,8 +548,6 @@
 }
 
 % section
-\titleformat{\section}
-	{\normalfont\bfseries\Large}{\thesection}{0em}{}
 \titlespacing*{\section}{0em}{\parskip}{0ex}
 \titlecontents{section}
 	[0pt]% left
@@ -524,8 +558,6 @@
 	[]% below-code
 
 % subsection
-\titleformat{\subsection}
-	{\normalfont\bfseries\large}{\thesubsection}{0em}{}
 \titlespacing*{\subsection}{0em}{\parskip}{0ex}
 \titlecontents{subsection}
 	[\dimexpr 4\charwidth\relax]% left
@@ -536,8 +568,6 @@
 	[]% below-code
 
 % subsubsection
-\titleformat{\subsubsection}
-	{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}[]
 \titlespacing*{\subsubsection}{0em}{\parskip}{0ex}
 \titlecontents{subsubsection}
 	[\dimexpr 8\charwidth\relax]% left
@@ -548,8 +578,6 @@
 	[]% below-code
 
 % paragraph
-\titleformat{\paragraph}
-	{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}[]
 \titlespacing*{\paragraph}{0em}{\parskip}{0ex}
 	\titlecontents{paragraph}
 	[\dimexpr 12\charwidth\relax]% left
@@ -560,8 +588,6 @@
 	[]% below-code
 
 % subparagraph
-\titleformat{\subparagraph}[runin]
-	{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}[]
 \titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
 \titlecontents{subparagraph}
 	[\dimexpr 16\charwidth\relax]% left
