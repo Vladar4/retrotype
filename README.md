@@ -16,6 +16,12 @@ Consult the `retrotype-guide.tex` document for the list of available commands an
 Changelog
 ---------
 
+### *(WIP)*
+* New commands:
+    * `\largetitles` and `\smalltitles` — different heading styles
+* Fixed `\overprint` bug
+* License changed to LPPL
+
 ### v0.1 (2024-06-14)
 Initial public testing release.
 
