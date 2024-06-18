@@ -37,7 +37,7 @@
 \def\license{LaTeX Project Public License 1.3c}
 \def\licenselink{https://www.latex-project.org/lppl.txt}
 \def\rtVer{0.1}
-\def\rtDate{2024-06-14}
+\def\rtDate{2024-06-18}
 
 \hypersetup{%
 	pdfborderstyle={/S/U/W 1},% underlined hyperlinks
@@ -85,6 +85,8 @@ __________________________________________|___/|_|______________________
 
 \end{titlepage}
 
+%\smalltitles
+
 \toc[3]
 
 \chapter{Retrotype}
@@ -92,15 +94,12 @@ __________________________________________|___/|_|______________________
 \clearBg
 \clearFg
 
-\rightbox{{\Large\itshape \rtDate}}
-
-\skipline
+\rightbox[\baselineskip]{{\bfseries\itshape \rtDate}}
 
 \section{The Objective}
 
 Retrotype aims to replicate the look of old typewriter-made documents while keeping as many benefits of LaTeX as possible.
 
-\skipline
 
 \section{The Implementation}
 
@@ -120,7 +119,7 @@ The most important part of achieving the objective is an appropriate font. \text
 \end{textbox}
 \end{tabbox}
 
-\section{Roadmap}
+\subsection{Roadmap}
 
 \begin{itemize}
 	\item v0.1 \dash\ (current state) initial public testing release;
@@ -129,7 +128,6 @@ The most important part of achieving the objective is an appropriate font. \text
 	\item v1.0 \dash\ release.
 \end{itemize}
 
-\skipline
 
 \section{Links}
 
@@ -138,7 +136,6 @@ The most important part of achieving the objective is an appropriate font. \text
 	\item \href{https://vladar.bearblog.dev}{vladar.bearblog.dev} \dash\ author's blog.
 \end{itemize}
 
-\skipline
 
 \paragraph{Resources used:}
 \begin{itemize}
@@ -189,9 +186,8 @@ While you can set up any custom layouts using the \bs newgeometry command (see t
 	\end{itemize}
 \end{itemize}
 
-\skipline
 
-\section{Current Dimensions}
+\subsection{Current Dimensions}
 
 \newcommand{\curdim}[1]{\printinunitsof{pt}\prntlen{#1} & \printinunitsof{pc}\prntlen{#1} & \printinunitsof{mm}\prntlen{#1} & \printinunitsof{in}\prntlen{#1}}
 
@@ -211,7 +207,6 @@ While you can set up any custom layouts using the \bs newgeometry command (see t
 
 ~Page/Text height ratio: \pgfmathparse{\pdfpageheight/\textheight}\pgfmathresult
 
-\skipline
 
 \paragraph{Tabs}
 
@@ -225,8 +220,6 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subsection{New Lengths}
 
-\skipline
-
 \subparagraph{\bs charwidth} \dash\ character width (currently \the\charwidth).
 
 \subparagraph{\bs docfontsize} \dash\ document font size dimension (currently \the\docfontsize).
@@ -235,11 +228,9 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subparagraph{\bs tabwidth} \dash\ width of a tab (currently \the\tabwidth), see \textbf{Tabs} below.
 
-\skipline
 
 \subsection{New Commands}
 
-\skipline
 
 \subsubsection{Page}
 
@@ -251,7 +242,6 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subparagraph{\bs cleartoleftpage} \dash\ clear to left page (new spread).
 
-\skipline
 
 \subsubsection{Symbols}
 
@@ -265,7 +255,6 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subparagraph{\bs thelinechar} \dash\ the default line character (\bs dash by default).
 
-\skipline
 
 \subsubsection{Tabs}
 
@@ -442,9 +431,9 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \tabpar[6][6]{Nunc sed pede. Praesent vitae lectus. Praesent neque justo,
 	vehicula eget, interdum id, facilisis et, nibh. Phasellus
-	at purus et libero lacinia dictum. Fusce aliquet. Nulla eu
-	ante placerat leo semper dictum. Mauris metus. Curabitur
-	lobortis. Curabitur sollicitudin hendrerit nunc.}
+	at purus et libero lacinia dictum. Fusce aliquet.}
+
+\skipline
 
 \header{header title}
 
@@ -551,11 +540,35 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
 \subsubsection{Titles}
 
-\subparagraph{\bs smalltitles} \dash\ set all titles' font size to \bs normalsize.
-
 \subparagraph{\bs largetitles} \dash\ set varying font sizes for the titles (the default).
 
-\skipline
+\subparagraph{\bs smalltitles} \dash\ set all titles' font size to \bs normalsize.
+
+\linefill
+
+\begin{multicols}{2}
+	\titleclass{\chapter}{straight}
+	\largetitles{}
+	\chapter*{Large Titles}
+	\section*{Section}
+	\subsection*{Subsection}
+	\subsubsection*{Subsubsection}
+	\paragraph*{Paragraph}
+	\paragraph*{Subparagraph}
+	
+	\columnbreak
+	
+	\smalltitles{}
+	\chapter*{Small Titles}
+	\section*{Section}
+	\subsection*{Subsection}
+	\subsubsection*{Subsubsection}
+	\paragraph*{Paragraph}
+	\paragraph*{Subparagraph}
+	\titleclass{\chapter}{top}
+\end{multicols}
+
+\linefill
 
 \subsubsection{Verbatim}
 
@@ -565,6 +578,7 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
 All commands of the \href{https://www.ctan.org/pkg/listings}{listings} package (e.g. the \textbf{\{verbatim\}} environment) are also available by default.
 
+\vfill
 \break
 
 \subsubsection{Background and Foreground}
@@ -698,7 +712,7 @@ AC 6; HD 1-1 (S); hp 4 each; MV 90' (30'); \#AT 1 short sword; D 1d6; Save NM; I
 
 \subsubsection{5b) North-East Tower}
 
-This tower is empty, with nothing of note inside.
+Nothing of note inside.
 
 \subsubsection{5c) South-West Tower}
 

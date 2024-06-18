@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/06/17]
+\ProvidesPackage{retrotype}[2024/06/18]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -281,8 +281,7 @@
 % \op{a}{chars}
 \newcommand{\overprint}[2]{%
 	\settowidth{\retrotype@strwidth}{#2}%
-	\makebox[0pt][l]{#2}%
-	\linecharw[#1]{\retrotype@strwidth}%
+	\stackengine{0pt}{#2}{\linecharw[#1]{\retrotype@strwidth}}{O}{c}{F}{F}{L}%
 }
 \makeatother
 
@@ -392,29 +391,6 @@
 }
 
 
-%%%%%%%
-% TOC %
-%%%%%%%
-
-% Enable for two-column TOC
-%\RequirePackage[toc]{multitoc}
-
-\renewcommand{\contentsname}{CONTENTS}
-
-% \toc[n]
-% print table of contents to the n-th depth
-\newcommand{\toc}[1][1]{%
-	\begingroup
-	\let\cleardoublepage\relax
-	\let\clearpage\relax
-	\hyphenchar\font=-1% disable hyphenation
-	\setcounter{tocdepth}{#1}\tableofcontents
-	\thispagestyle{toc}
-	\hyphenchar\font=`\-% enable hyphenation
-	\endgroup
-}
-
-
 %%%%%%%%%%%%
 % VERBATIM %
 %%%%%%%%%%%%
@@ -471,20 +447,99 @@
 \renewcommand{\labelitemiv}{\bfseries\textbullet}
 
 
+%%%%%%%
+% TOC %
+%%%%%%%
+
+% Enable for two-column TOC
+%\RequirePackage[toc]{multitoc}
+
+\renewcommand{\contentsname}{CONTENTS}
+
+% \toc[n]
+% print table of contents to the n-th depth
+\newcommand{\toc}[1][1]{%
+	\begingroup
+	\let\cleardoublepage\relax
+	\let\clearpage\relax
+	\hyphenchar\font=-1% disable hyphenation
+	\setcounter{tocdepth}{#1}\tableofcontents
+	\thispagestyle{toc}
+	\hyphenchar\font=`\-% enable hyphenation
+	\endgroup
+}
+
+\RequirePackage{titletoc}
+\RequirePackage[titles]{tocloft}% titles option - do not typeset ToC, LoF, LoT titles
+
+% chapter
+%\def\chapterautorefname{Chapter}
+\titlecontents{chapter}
+[0em]% left
+{\bfseries}% above-code
+{\thecontentslabel}% numbered-entry-format
+{}%\makebox[\tocstep][l]{}}% numberless-entry-format
+{\cftchapleader\quad\contentspage}% filler-page-format
+[]% below-code
+
+% section
+\titlecontents{section}
+[0pt]% left
+{}% above-code
+{\thecontentslabel}% numbered-entry-format
+{}% numberless-entry-format
+{\cftsecleader\quad\contentspage}% filler-page-format
+[]% below-code
+
+% subsection
+\titlecontents{subsection}
+[\dimexpr 4\charwidth\relax]% left
+{}% above-code
+{\thecontentslabel}% numbered-entry-format
+{}% numberless-entry-format
+{\cftsubsecleader\quad\contentspage}% filler-page-format
+[]% below-code
+
+% subsubsection
+\titlecontents{subsubsection}
+[\dimexpr 8\charwidth\relax]% left
+{}% above-code
+{\thecontentslabel}% numbered-entry-format
+{}% numberless-entry-format
+{\cftsubsubsecleader\quad\contentspage}% filler-page-format
+[]% below-code
+
+% paragraph
+\titlecontents{paragraph}
+[\dimexpr 12\charwidth\relax]% left
+{}% above-code
+{\thecontentslabel}% numbered-entry-format
+{}% numberless-entry-format
+{\cftparaleader\quad\contentspage}% filler-page-format
+[]% below-code
+
+% subparagraph
+\titlecontents{subparagraph}
+[\dimexpr 16\charwidth\relax]% left
+{}% above-code
+{\thecontentslabel}% numbered-entry-format
+{}% numberless-entry-format
+{\cftsubparaleader\quad\contentspage}% filler-page-format
+[]% below-code
+
+
 %%%%%%%%%%%%%%
 % SECTIONING %
 %%%%%%%%%%%%%%
 
 % Titles
 \RequirePackage[newlinetospace]{titlesec}
-\RequirePackage{titletoc}
-\RequirePackage[titles]{tocloft}% titles option - do not typeset ToC, LoF, LoT titles
 
 \newlength{\tocstep}
 \setlength{\tocstep}{\tabchars\charwidth}% toc "tabbing" step distance
 
 % hide section and subsection numbers in table of contents, along with corresponding indentation
-\renewcommand{\thechapter}{\arabic{chapter}.}
+\renewcommand{\thechapter}{}%{\arabic{chapter}.}
 \renewcommand\thesection{}
 \renewcommand\thesubsection{}
 
@@ -495,50 +550,72 @@
 \def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
 \makeatother
 
+\makeatletter
+\newcommand{\ultitle}[1]{%
+	\settowidth{\retrotype@strwidth}{#1}%
+	\pgfmathaddtolength{\retrotype@strwidth}{\widthof{\chaptermark}}
+	\makebox[0pt][l]{#1}%
+	\linecharw[\_]{\retrotype@strwidth}%
+}
+\makeatother
+
 % set all titles' font size to \normalsize
 \newcommand{\smalltitles}{%
+	% chapter
+	\titlespacing*{\chapter}{0em}{\parskip}{\baselineskip}
 	\titleformat{\chapter}
-		{\normalfont\bfseries\normalsize}{\thechapter\ }{0em}{}
+		{\centering\normalfont\bfseries\normalsize\MakeUppercase}{\thechapter}{0em}{\ul}
+	% section
+	\titlespacing*{\section}{0em}{0.5\baselineskip}{0.5\baselineskip}
 	\titleformat{\section}
-		{\normalfont\bfseries\normalsize}{\thesection}{0em}{}
+		{\normalfont\bfseries\normalsize\MakeUppercase}{\thesection}{0em}{\ul}
+	% subsection
+	\titlespacing*{\subsection}{0em}{0.5\baselineskip}{0.5\baselineskip}
 	\titleformat{\subsection}
-		{\normalfont\bfseries\normalsize}{\thesubsection}{0em}{}
+		{\normalfont\bfseries\normalsize\MakeUppercase}{\thesubsection}{0em}{}
+	% subsubsection
+	\titlespacing*{\subsubsection}{0em}{0.5\baselineskip}{0.5\baselineskip}
 	\titleformat{\subsubsection}
 		{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}
+	% paragraph
+	\titlespacing*{\paragraph}{0em}{\parskip}{0ex}
 	\titleformat{\paragraph}
 		{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}
+	% subparagraph
+	\titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
 	\titleformat{\subparagraph}[runin]
 		{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}
 }
 
 % set varying font sizes for the titles (the default)
 \newcommand{\largetitles}{%
+	% chapter
+	\titlespacing*{\chapter}{0em}{\parskip}{\parskip}
 	\titleformat{\chapter}
-		{\normalfont\bfseries\LARGE}{\thechapter\ }{0em}{}
+		{\centering\normalfont\bfseries\LARGE}{\thechapter}{0em}{}
+	% section
+	\titlespacing*{\section}{0em}{\parskip}{0.5\baselineskip}
 	\titleformat{\section}
 		{\normalfont\bfseries\Large}{\thesection}{0em}{}
+	% subsection
+	\titlespacing*{\subsection}{0em}{0.5\baselineskip}{0.5\baselineskip}
 	\titleformat{\subsection}
 		{\normalfont\bfseries\large}{\thesubsection}{0em}{}
+	% subsubsection
+	\titlespacing*{\subsubsection}{0em}{0.25\baselineskip}{\parskip}
 	\titleformat{\subsubsection}
 		{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}
+	% paragraph
+	\titlespacing*{\paragraph}{0em}{\parskip}{0ex}
 	\titleformat{\paragraph}
 		{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}
+	% subparagraph
+	\titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
 	\titleformat{\subparagraph}[runin]
 		{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}
 }
 
 \largetitles{}
-
-% chapter
-\titlespacing*{\chapter}{0em}{\parskip}{0ex}
-\def\chapterautorefname{Chapter}
-\titlecontents{chapter}
-	[0em]% left
-	{\bfseries}% above-code
-	{\makebox[\tocstep][l]{\thecontentslabel}}% numbered-entry-format
-	{\makebox[\tocstep][l]{}}% numberless-entry-format
-	{\cftchapleader\quad\contentspage}% filler-page-format
-	[]% below-code
 
 % unnumbered chapter
 \newcommand{\chapterx}[1]{%
@@ -547,56 +624,6 @@
 	\addcontentsline{toc}{chapter}{#1}%
 }
 
-% section
-\titlespacing*{\section}{0em}{\parskip}{0ex}
-\titlecontents{section}
-	[0pt]% left
-	{}% above-code
-	{\thecontentslabel}% numbered-entry-format
-	{}% numberless-entry-format
-	{\cftsecleader\quad\contentspage}% filler-page-format
-	[]% below-code
-
-% subsection
-\titlespacing*{\subsection}{0em}{\parskip}{0ex}
-\titlecontents{subsection}
-	[\dimexpr 4\charwidth\relax]% left
-	{}% above-code
-	{\thecontentslabel}% numbered-entry-format
-	{}% numberless-entry-format
-	{\cftsubsecleader\quad\contentspage}% filler-page-format
-	[]% below-code
-
-% subsubsection
-\titlespacing*{\subsubsection}{0em}{\parskip}{0ex}
-\titlecontents{subsubsection}
-	[\dimexpr 8\charwidth\relax]% left
-	{}% above-code
-	{\thecontentslabel}% numbered-entry-format
-	{}% numberless-entry-format
-	{\cftsubsubsecleader\quad\contentspage}% filler-page-format
-	[]% below-code
-
-% paragraph
-\titlespacing*{\paragraph}{0em}{\parskip}{0ex}
-	\titlecontents{paragraph}
-	[\dimexpr 12\charwidth\relax]% left
-	{}% above-code
-	{\thecontentslabel}% numbered-entry-format
-	{}% numberless-entry-format
-	{\cftparaleader\quad\contentspage}% filler-page-format
-	[]% below-code
-
-% subparagraph
-\titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
-\titlecontents{subparagraph}
-	[\dimexpr 16\charwidth\relax]% left
-	{}% above-code
-	{\thecontentslabel}% numbered-entry-format
-	{}% numberless-entry-format
-	{\cftsubparaleader\quad\contentspage}% filler-page-format
-	[]% below-code
-
 
 %%%%%%%%%%%%
 % FANCYHDR %
@@ -604,9 +631,18 @@
 
 \RequirePackage{fancyhdr}
 
-\renewcommand{\headrule}{
+\renewcommand{\headrule}{%
 	\parbox[t]{\textwidth}{\linefill[\odash]}
 }
+
+% Change chaptermark
+
+\renewcommand{\chaptermark}[1]{%
+	\markboth{#1}{#1}}
+
+%\renewcommand{\chaptermark}[1]{%
+%	\markboth{\chaptername\ \thechapter\ #1}{}%
+%}
 
 % define fancy page style
 \fancypagestyle{fancy}{%
@@ -634,11 +670,6 @@
 
 \fancypagestyle{plain}{}% redefine plain page style
 \pagestyle{fancy}% set fancy page style
-
-% Change chaptermark
-\renewcommand{\chaptermark}[1]{%
-	\markboth{\chaptername\ \thechapter\ #1}{}%
-}
 
 
 %%%%%%%%%%
