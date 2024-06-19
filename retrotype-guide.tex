@@ -36,8 +36,8 @@
 \def\author{Vladar}
 \def\license{LaTeX Project Public License 1.3c}
 \def\licenselink{https://www.latex-project.org/lppl.txt}
-\def\rtVer{0.1}
-\def\rtDate{2024-06-18}
+\def\rtVer{0.2-devel}
+\def\rtDate{2024-06-20}
 
 \hypersetup{%
 	pdfborderstyle={/S/U/W 1},% underlined hyperlinks
@@ -119,7 +119,7 @@ The most important part of achieving the objective is an appropriate font. \text
 \end{textbox}
 \end{tabbox}
 
-\subsection{Roadmap}
+\section{Roadmap}
 
 \begin{itemize}
 	\item v0.1 \dash\ (current state) initial public testing release;
@@ -229,21 +229,7 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 \subparagraph{\bs tabwidth} \dash\ width of a tab (currently \the\tabwidth), see \textbf{Tabs} below.
 
 
-\subsection{New Commands}
-
-
-\subsubsection{Page}
-
-\subparagraph{\bs pagelayout} \dash\ document page layout (Letter, A4, A5, undefined).
-\subparagraph{\bs defaultGeometry} \dash\ reset to page geometry. Called automatically.
-\subparagraph{\bs cpl} \dash\ characters per line (currently \cpl).
-
-\subparagraph{\bs lpp} \dash\ lines per page (currently \lpp).
-
-\subparagraph{\bs cleartoleftpage} \dash\ clear to left page (new spread).
-
-
-\subsubsection{Symbols}
+\subsection{New Symbols}
 
 \subparagraph{\bs dash} \dash\ dash (\dash).
 
@@ -256,7 +242,21 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 \subparagraph{\bs thelinechar} \dash\ the default line character (\bs dash by default).
 
 
-\subsubsection{Tabs}
+\subsection{Pages}
+
+\subparagraph{\bs pagelayout} \dash\ document page layout
+\\\tab(Letter, Legal, Executive, A4, A5, undefined).
+\subparagraph{\bs defaultGeometry} \dash\ reset to page geometry. Called automatically.
+\subparagraph{\bs cpl} \dash\ characters per line (currently \cpl).
+
+\subparagraph{\bs lpp} \dash\ lines per page (currently \lpp).
+
+\subparagraph{\bs cleartoleftpage} \dash\ clear to left (even) page (new spread).
+
+\subparagraph{\bs cleartorightpage} \dash\ clear to right (odd) page.
+
+
+\subsection{Tabs}
 
 \subparagraph{\bs tab} \dash\ go to the next tab in the current line.
 
@@ -270,7 +270,7 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 \break
 
 
-\subsubsection{Repeats and Lines}
+\subsection{Repeats and Lines}
 
 \subparagraph{\bs rep\{chars\}\{n\}} \dash\ repeat the \textbf{chars} \textbf{n} times.
 
@@ -332,7 +332,7 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 \break
 
 
-\subsubsection{Stackengine}
+\subsection{Stackengine}
 
 Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengine}{stackengine} package to simulate the overprinting of one character on top of another \dash\ a typewriting technique for creating new characters and graphic design elements.
 
@@ -340,39 +340,67 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\tabspace\bs op\{a\}\{chars\}} \dash\ overprint \textbf{a} on top of all \textbf{chars}.
 
+\subparagraph{\bs overprintw[width]\{a\}} \dash\ same as
+
+\subparagraph{\tabspace\bs opw[width]\{a\}} \dash\ overprint \textbf{a} for the given \textbf{width} on the line, but keep printing from the starting point (\textbf{width} = \bs linegoal by default).
+
 \subparagraph{\bs underline\{chars\}} \dash\ same as
 
 \subparagraph{\tabspace\bs ul\{chars\}} \dash\ underline given \textbf{chars}.
+
+\subparagraph{\bs underlinefill} \dash\ same as
+
+\subparagraph{\tabspace\bs ulf} \dash\ underline the rest of the line, but keep printing from the starting point.
 
 \subparagraph{\bs overline\{chars\}} \dash\ same as
 
 \subparagraph{\tabspace\bs ol\{chars\}} \dash\ overline given \textbf{chars}.
 
+\subparagraph{\bs overlinefill} \dash\ same as
+
+\subparagraph{\tabspace\bs olf} \dash\ overline the rest of the line, but keep printing from the starting point.
+
 \subparagraph{\bs strikeout\{chars\}} \dash\ same as
 
 \subparagraph{\tabspace\bs so\{chars\}} \dash\ strikeout given \textbf{chars}.
+
+\subparagraph{\bs strikeoutfill} \dash\ same as
+
+\subparagraph{\tabspace\bs sof} \dash\ strikeout the rest of the line, but keep printing from the starting point.
 
 \skipline
 
 \paragraph{Examples}
 
+\vspace*{-2ex}
+
+\begin{multicols}{3}
 \begin{itemize}
-	\item normal text
 	\item \textbf{\bs textbf\{\ldots\}}
 	\item {\bfseries \{\bs bfseries \ldots\}}
 	\item \strong{\bs strong\{\ldots\}}
+	\item \textsl{\bs textsl\{\ldots\}}
+	\item {\slshape \{\bs slshape \ldots\}}
 	\item \textit{\bs textit\{\ldots\}}
 	\item {\itshape \{\bs itshape \ldots\}}
 	\item \emph{\bs emph\{\ldots\}}
 	\item {\em \{\bs em \ldots\}}
-	
-	\item \op{|}{\bs op\{|\}\{\ldots\}} \tab\bs op\{|\}\{\ldots\} \textit{(\bs overprint)}
-	\item \ol{\bs ol\{\ldots\}} \tab\tab\bs ol\{\ldots\} \textit{(\bs overline)}
-	\item \ul{\bs ul\{\ldots\}} \tab\tab\bs ul\{\ldots\} \textit{(\bs underline)}
-	\item \so{\bs so\{\ldots\}} \tab\tab\bs so\{\ldots\} \textit{(\bs strikeout)}
+\end{itemize}
+\end{multicols}
+
+\begin{itemize}
+	\item \op{\textbar}{\bs op\{\bs textbar\}\{\ldots\}} \tab \bs op\{\bs textbar\}\{\ldots\} \tab \textit{(\bs overprint)}
+	\item \opw{\textbar}\bs opw\{\bs textbar\}\ldots \tabn{7} \textit{(\bs overprintw)}
+	\item \ul{\bs ul\{\ldots\}} \tab\bs ul\{\ldots\} \tab \textit{(\bs underline)}
+	\item \ulf \bs ulf \ldots \tabn{3} \textit{(\bs underlinefill)}
+	\item \ol{\bs ol\{\ldots\}} \tab\bs ol\{\ldots\} \tab \textit{(\bs overline)}
+	\item \olf \bs olf \ldots \tabn{3} \textit{(\bs overlinefill)}
+	\item \so{\bs so\{\ldots\}} \tab\bs so\{\ldots\} \tab \textit{(\bs strikeout)}
+	\item \sof \bs sof \ldots \tabn{3} \textit{(\bs strikeoutfill)}
 \end{itemize}
 
-\skipline
+\vfill
+\break
 
 \bs linefill[\bs op\{<\}\{>\}]
 
@@ -396,10 +424,24 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \linefill[\op{\dash}{\op{(}{)}}]
 
+\skipline
+
+\bs linefill[\bs ol\{\bs bs\bs\ /\}]\\
+\bs vspace*\{-1ex\}\\
+\bs linefill[\bs so\{\bs\ \}\bs ol\{\bs ul\{|\}\}\bs so\{\bs\ \}]\\
+\bs vspace*\{-1ex\}\\
+\bs linefill[\bs ul\{/\bs \ \bs bs\}]\\
+
+\linefill[\ol{\bs\ /}]
+\vspace*{-1ex}
+\linefill[\so{\ }\ol{\ul{|}}\so{\ }]
+\vspace*{-1ex}
+\linefill[\ul{/\ \bs}]
+
 \break
 
 
-\subsubsection{Formatting}
+\subsection{Formatting}
 
 \subparagraph{\bs skipline[height]} \dash\ insert a vertical space (\bs baselineskip by default).
 
@@ -461,7 +503,7 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \break
 
 
-\subsubsection{Retrotable}
+\subsection{Retrotable}
 
 A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
@@ -524,7 +566,7 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 \break
 
 
-\subsubsection{Table of Contents}
+\subsection{Table of Contents}
 
 \begin{tabbox}[4][4]
 	\begin{headerbox}{multitoc}
@@ -538,7 +580,7 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
 \skipline
 
-\subsubsection{Titles}
+\subsection{Titles}
 
 \subparagraph{\bs largetitles} \dash\ set varying font sizes for the titles (the default).
 
@@ -570,7 +612,7 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
 \linefill
 
-\subsubsection{Verbatim}
+\subsection{Verbatim}
 
 \subparagraph{\bs includeverbatim\{file\}} \dash\ include text file verbatim.
 
@@ -579,9 +621,9 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 All commands of the \href{https://www.ctan.org/pkg/listings}{listings} package (e.g. the \textbf{\{verbatim\}} environment) are also available by default.
 
 \vfill
-\break
+\cleartorightpage
 
-\subsubsection{Background and Foreground}
+\subsection{Background and Foreground}
 
 \subparagraph{\bs addBg\{code\}} \dash\ add \textbf{code} to the background picture.
 

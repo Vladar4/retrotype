@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/06/18]
+\ProvidesPackage{retrotype}[2024/06/20]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -161,6 +161,22 @@
 }
 \makeatother
 
+% Clear to right page
+\makeatletter
+\newcommand*{\cleartorightpage}{%
+	\clearpage
+	\if@twoside
+		\ifodd\c@page
+		\else
+			\hbox{}\thispagestyle{empty}\newpage
+			\if@twocolumn
+				\hbox{}\thispagestyle{empty}\newpage
+			\fi
+		\fi
+	\fi
+}
+\makeatother
+
 
 %%%%%%%%%%%
 % SYMBOLS %
@@ -214,6 +230,7 @@
 		\tab%
 		\ifnum\idx<#1\advance\idx by 1
 	\repeat
+	\ignorespaces
 }
 
 
@@ -278,36 +295,68 @@
 \makeatletter
 \newlength{\retrotype@strwidth}
 
-% \op{a}{chars}
+% \overprint{a}{chars}
+% overprint a on top of all chars.
 \newcommand{\overprint}[2]{%
 	\settowidth{\retrotype@strwidth}{#2}%
-	\stackengine{0pt}{#2}{\linecharw[#1]{\retrotype@strwidth}}{O}{c}{F}{F}{L}%
+	\stackengine{0pt}{#2}{\linecharw[#1]{\retrotype@strwidth}}{O}{l}{F}{F}{L}%
+}
+
+% \overprintw[width]{a}
+% overprint a for the given width on the line, but continue printing from the starting point
+\newcommand{\overprintw}[2][\linegoal]{%
+	\setlength{\retrotype@strwidth}{#1}%
+	\stackengine{0pt}{}{\linecharw[#2]{\retrotype@strwidth}}{O}{l}{F}{T}{L}%
 }
 \makeatother
 
+% \op{a}{chars}
 \newcommand{\op}[2]{\overprint{#1}{#2}}
 
+% \opw[width]{a}
+\newcommand{\opw}[2][\linegoal]{\overprintw[#1]{#2}}
+
+% \underline{chars}
 \renewcommand{\underline}[1]{%
-	\op{\_}{#1}%
+	\overprint{\_}{#1}%
 }
 
 % \ul{chars}
 \newcommand{\ul}[1]{\underline{#1}}
 
+% \underlinefill
+\newcommand{\underlinefill}{\overprintw{\_}}
+
+% \ulf
+\newcommand{\ulf}{\overprintw{\_}}
+
+% \overline{chars}
 \renewcommand{\overline}[1]{%
-	\op{\odash}{#1}%
+	\overprint{\odash}{#1}%
 }
 
 % \ol{chars}
 \newcommand{\ol}[1]{\overline{#1}}
 
+% \overlinefill
+\newcommand{\overlinefill}{\overprintw{\odash}}
+
+% \olf
+\newcommand{\olf}{\overprintw{\odash}}
+
+% \strikeout{chars}
 \newcommand{\strikeout}[1]{%
-	\op{\dash}{#1}%
+	\overprint{\dash}{#1}%
 }
 
 % \so{chars}
 \newcommand{\so}[1]{\strikeout{#1}}
 
+% \strikeoutfill
+\newcommand{\strikeoutfill}{\overprintw{\dash}}
+
+% \sof
+\newcommand{\sof}{\overprintw{\dash}}
 
 %%%%%%%%%%%%%%
 % FORMATTING %
