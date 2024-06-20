@@ -288,7 +288,7 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subparagraph{\bs strfit\{chars\}} \dash\ return int number of how many times the \textbf{chars} will fit into the remaining space on the line.
 
-\skipline
+\break
 
 \paragraph{Examples}
 
@@ -336,6 +336,8 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengine}{stackengine} package to simulate the overprinting of one character on top of another \dash\ a typewriting technique for creating new characters and graphic design elements.
 
+\skipline
+
 \subparagraph{\bs overprint\{a\}\{chars\}} \dash\ same as
 
 \subparagraph{\tabspace\bs op\{a\}\{chars\}} \dash\ overprint \textbf{a} on top of all \textbf{chars}.
@@ -343,6 +345,8 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \subparagraph{\bs overprintw[width]\{a\}} \dash\ same as
 
 \subparagraph{\tabspace\bs opw[width]\{a\}} \dash\ overprint \textbf{a} for the given \textbf{width} on the line, but keep printing from the starting point (\textbf{width} = \bs linegoal by default).
+
+\skipline
 
 \subparagraph{\bs underline\{chars\}} \dash\ same as
 
@@ -352,6 +356,8 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\tabspace\bs ulf} \dash\ underline the rest of the line, but keep printing from the starting point.
 
+\skipline
+
 \subparagraph{\bs overline\{chars\}} \dash\ same as
 
 \subparagraph{\tabspace\bs ol\{chars\}} \dash\ overline given \textbf{chars}.
@@ -359,6 +365,8 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \subparagraph{\bs overlinefill} \dash\ same as
 
 \subparagraph{\tabspace\bs olf} \dash\ overline the rest of the line, but keep printing from the starting point.
+
+\skipline
 
 \subparagraph{\bs strikeout\{chars\}} \dash\ same as
 
@@ -368,7 +376,7 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\tabspace\bs sof} \dash\ strikeout the rest of the line, but keep printing from the starting point.
 
-\skipline
+\break
 
 \paragraph{Examples}
 
@@ -399,8 +407,7 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 	\item \sof \bs sof \ldots \tabn{3} \textit{(\bs strikeoutfill)}
 \end{itemize}
 
-\vfill
-\break
+\skipline
 
 \bs linefill[\bs op\{<\}\{>\}]
 
@@ -438,6 +445,7 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \vspace*{-1ex}
 \linefill[\ul{/\ \bs}]
 
+\vfill
 \break
 
 
@@ -445,35 +453,59 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\bs skipline[height]} \dash\ insert a vertical space (\bs baselineskip by default).
 
+\skipline
+
+\subparagraph{\bs mirrorh\{text\}} \dash\ mirror \textbf{text} horizontally.
+
+\subparagraph{\bs mirrorv\{text\}} \dash\ mirror \textbf{text} vertically.
+
+\subparagraph{\bs mirrorboth\{text\}} \dash\ mirror \textbf{text} horizontally and vertically.
+
+\skipline
+
 \subparagraph{\bs rightbox[height]\{text\}} \dash\ a right-aligned line of  \textbf{text} raised by \bs baselineskip + height. The default height is \bs parskip to put the text on a \bs paragraph\{\} line above.
+
+\skipline
 
 \subparagraph{\bs tabpar[l][r]\{text\}} \dash\ a single paragraph indented from the \textbf{l}eft and \textbf{r}ight by \textbf{l} and \textbf{r} characters (\textbf{l} = \bs tabchars (\tabchars), \textbf{r} = 0 by default).
 
 \subparagraph{\{tabbox\}[l][r]} environment \dash\ \textbf{text} indented from the \textbf{l}eft and \textbf{r}ight by \textbf{l} and \textbf{r} characters respectively (\textbf{l} = \bs tabchars (\tabchars) and \textbf{r} = 0 by default). \textbf{\{tabbox\}*[l][r]} version switches the values between odd and even pages.
+
+\skipline
 
 \subparagraph{\bs header[chars][format]\{text\}} \dash\ \textbf{text} with \textbf{chars} filling the line
 \\(\textbf{chars} = \bs\_, \textbf{format} = \bs bfseries by default). Not a sectioning element.
 
 \subparagraph{\bs uheader[chars][format]\{text\}} \dash\ same as \textbf{\bs header}, with \textbf{text} underlined.
 
+\skipline
+
 \subparagraph{\{headerbox\}[format]\{header\}[top][bottom]} environment \dash\ text box with a~\textbf{header}, surrounded by lines (\textbf{top} = \bs\_, \textbf{bottom} = \bs odash by default).
 
 \subparagraph{\{uheaderbox\}[format]\{header\}[top][bottom]} environment \dash\ same as \textbf{\{headerbox\}}, with \textbf{header} underlined.
 
+\skipline
+
 \subparagraph{\{textbox\}[top][bottom]} environment \dash\ text box surrounded by top and bottom lines (\textbf{top} = \bs\_ and \textbf{bottom} = \bs odash by default).
 
-\skipline
+\break
 
 \paragraph{Examples}
 
 \rightbox{\bs rightbox\{Right-aligned text.\}}
 
+\mirrorh{\bs mirrorh} \tab \bs mirrorh\{\bs bs mirrorh\}
+
+\mirrorv{\bs mirrorv} \tab \bs mirrorv\{\bs bs mirrorv\}
+
+\mirrorboth{\bs mirrorboth} \bs mirrorboth\{\bs bs mirrorboth\}
+
+\skipline
+
 \bs tabpar[6][6]\{\bs lipsum[66]\}
 \\\textbf{or} \bs begin\{tabbox\}[6][6] \bs lipsum[66] \bs end\{tabbox\}
 
-\tabpar[6][6]{Nunc sed pede. Praesent vitae lectus. Praesent neque justo,
-	vehicula eget, interdum id, facilisis et, nibh. Phasellus
-	at purus et libero lacinia dictum. Fusce aliquet.}
+\tabpar[6][6]{\lipsum[66]}
 
 \skipline
 
@@ -539,7 +571,7 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 	\item \~{} empty space
 \end{itemize}
 
-\skipline
+\break
 
 \paragraph{Examples}
 

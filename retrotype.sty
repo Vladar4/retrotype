@@ -366,6 +366,12 @@
 % insert a vertical space
 \newcommand{\skipline}[1][\baselineskip]{\vspace*{#1}}
 
+\newcommand{\mirrorh}[1]{\scalebox{-1}[1]{#1}}
+
+\newcommand{\mirrorv}[1]{\raisebox{\depth}{\scalebox{1}[-1]{#1}}}
+
+\newcommand{\mirrorboth}[1]{\raisebox{\depth}{\scalebox{-1}[-1]{#1}}}
+
 % \rightbox[\parskip]{text}
 % a right-aligned line of text raised by \baselineskip + #1
 % the default #1 is \parskip to put the text on a \paragraph{} line above
