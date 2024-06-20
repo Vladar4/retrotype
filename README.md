@@ -18,8 +18,12 @@ Changelog
 
 ### *(WIP)*
 * New commands:
+    * `\cleartorightpage`
     * `\largetitles` and `\smalltitles` — different heading styles
+    * `\mirrorh`, `\mirrorv`, `\mirrorboth` — text mirroring
+    * `\overprintw`, `\opw`, `\underlinefill`, `\ulf`, `\overlinefill`, `\olf`, `\strikeoutfill`, `\sof` — additional stackengine commands
 * Fixed `\overprint` bug
+* Fixed `\tabn` bug
 * License changed to LPPL
 
 ### v0.1 (2024-06-14)
