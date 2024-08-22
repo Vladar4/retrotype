@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/08/20]
+\ProvidesPackage{retrotype}[2024/08/22]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -336,14 +336,14 @@
 % overprint a on top of all chars.
 \newcommand{\overprint}[2]{%
 	\settowidth{\retrotype@strwidth}{#2}%
-	\stackengine{0pt}{#2}{\linecharw[#1]{\retrotype@strwidth}}{O}{l}{F}{F}{L}%
+	\protect{\stackengine{0pt}{#2}{\linecharw[#1]{\retrotype@strwidth}}{O}{l}{F}{F}{L}}%
 }
 
 % \overprintw[width]{a}
 % overprint a for the given width on the line, but continue printing from the starting point
 \newcommand{\overprintw}[2][\linegoal]{%
 	\setlength{\retrotype@strwidth}{#1}%
-	\stackengine{0pt}{}{\linecharw[#2]{\retrotype@strwidth}}{O}{l}{F}{T}{L}%
+	\protect{\stackengine{0pt}{}{\linecharw[#2]{\retrotype@strwidth}}{O}{l}{F}{T}{L}}%
 }
 \makeatother
 
@@ -651,65 +651,105 @@
 }
 \makeatother
 
+\def\bchapskip{0pt}% before chapter skip
+\def\achapskip{0pt}% after chapter skip
+\def\bsecskip{0pt}% before section skip
+\def\asecskip{0pt}% after section skip
+\def\bsubsecskip{0pt}% before subsection skip
+\def\asubsecskip{0pt}% after subsection skip
+\def\bsubsubsecskip{0pt}% before subsubsection skip
+\def\asubsubsecskip{0pt}% after subsubsection skip
+\def\bparskip{0pt}% before paragraph skip
+\def\aparskip{0pt}% after paragraph skip
+\def\bsubparskip{0pt}% before subparagraph skip
+\def\asubparskip{0pt}% after subparagraph skip
+
+
 % set all titles' font size to \normalsize
 \newcommand{\smalltitles}{%
+	% skips
+	\def\bchapskip{\parskip}
+	\def\achapskip{\baselineskip}
+	\def\bsecskip{0.5\baselineskip}
+	\def\asecskip{0.5\baselineskip}
+	\def\bsubsecskip{0.5\baselineskip}
+	\def\asubsecskip{0.5\baselineskip}
+	\def\bsubsubsecskip{0.5\baselineskip}
+	\def\asubsubsecskip{0.5\baselineskip}
+	\def\bparskip{\parskip}
+	\def\aparskip{0ex}
+	\def\bsubparskip{\parskip}
+	\def\asubparskip{\wordsep}
 	% chapter
-	\titlespacing*{\chapter}{0em}{\parskip}{\baselineskip}
+	\titlespacing*{\chapter}{0em}{\bchapskip}{\achapskip}
 	\titleformat{\chapter}
 		{\centering\normalfont\bfseries\normalsize\MakeUppercase}{\thechapter}{0em}{\ul}
 	% section
-	\titlespacing*{\section}{0em}{0.5\baselineskip}{0.5\baselineskip}
+	\titlespacing*{\section}{0em}{\bsecskip}{\asecskip}
 	\titleformat{\section}
 		{\normalfont\bfseries\normalsize\MakeUppercase}{\thesection}{0em}{\ul}
 	% subsection
-	\titlespacing*{\subsection}{0em}{0.5\baselineskip}{0.5\baselineskip}
+	\titlespacing*{\subsection}{0em}{\bsubsecskip}{\asubsecskip}
 	\titleformat{\subsection}
 		{\normalfont\bfseries\normalsize\MakeUppercase}{\thesubsection}{0em}{}
 	% subsubsection
-	\titlespacing*{\subsubsection}{0em}{0.5\baselineskip}{0.5\baselineskip}
+	\titlespacing*{\subsubsection}{0em}{\bsubsubsecskip}{\asubsubsecskip}
 	\titleformat{\subsubsection}
 		{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}
 	% paragraph
-	\titlespacing*{\paragraph}{0em}{\parskip}{0ex}
+	\titlespacing*{\paragraph}{0em}{\bparskip}{\aparskip}
 	\titleformat{\paragraph}
 		{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}
 	% subparagraph
-	\titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
+	\titlespacing*{\subparagraph}{\parindent}{\bsubparskip}{\asubparskip}
 	\titleformat{\subparagraph}[runin]
 		{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}
 }
 
 % set varying font sizes for the titles (the default)
 \newcommand{\largetitles}{%
+	% skips
+	\def\bchapskip{\parskip}
+	\def\achapskip{\parskip}
+	\def\bsecskip{\parskip}
+	\def\asecskip{0.5\baselineskip}
+	\def\bsubsecskip{0.5\baselineskip}
+	\def\asubsecskip{0.5\baselineskip}
+	\def\bsubsubsecskip{0.25\baselineskip}
+	\def\asubsubsecskip{\parskip}
+	\def\bparskip{\parskip}
+	\def\aparskip{0ex}
+	\def\bsubparskip{\parskip}
+	\def\asubparskip{\wordsep}
 	% chapter
-	\titlespacing*{\chapter}{0em}{\parskip}{\parskip}
+	\titlespacing*{\chapter}{0em}{\bchapskip}{\achapskip}
 	\titleformat{\chapter}
 		{\centering\normalfont\bfseries\LARGE}{\thechapter}{0em}{}
 	% section
-	\titlespacing*{\section}{0em}{\parskip}{0.5\baselineskip}
+	\titlespacing*{\section}{0em}{\bsecskip}{\asecskip}
 	\titleformat{\section}
 		{\normalfont\bfseries\Large}{\thesection}{0em}{}
 	% subsection
-	\titlespacing*{\subsection}{0em}{0.5\baselineskip}{0.5\baselineskip}
+	\titlespacing*{\subsection}{0em}{\bsubsecskip}{\asubsecskip}
 	\titleformat{\subsection}
 		{\normalfont\bfseries\large}{\thesubsection}{0em}{}
 	% subsubsection
-	\titlespacing*{\subsubsection}{0em}{0.25\baselineskip}{\parskip}
+	\titlespacing*{\subsubsection}{0em}{\bsubsubsecskip}{\asubsubsecskip}
 	\titleformat{\subsubsection}
 		{\normalfont\bfseries\normalsize}{\thesubsubsection}{0em}{}
 	% paragraph
-	\titlespacing*{\paragraph}{0em}{\parskip}{0ex}
+	\titlespacing*{\paragraph}{0em}{\bparskip}{\aparskip}
 	\titleformat{\paragraph}
 		{\normalfont\bfseries\normalsize}{\theparagraph}{0em}{}
 	% subparagraph
-	\titlespacing*{\subparagraph}{\parindent}{\parskip}{\wordsep}
+	\titlespacing*{\subparagraph}{\parindent}{\bsubparskip}{\asubparskip}
 	\titleformat{\subparagraph}[runin]
 		{\normalfont\bfseries\normalsize}{\thesubparagraph}{0em}{}
 }
 
 \largetitles{}
 
-% unnumbered chapter
+% unnumbered chapter with a TOC entry
 \newcommand{\chapterx}[1]{%
 	\chapter*{#1}
 	\markboth{#1}{}

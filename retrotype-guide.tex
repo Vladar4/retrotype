@@ -624,11 +624,14 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
 \subsection{Titles}
 
+\subparagraph{\bs chapterx} \dash\ unnumbered chapter with a TOC entry.
+
 \subparagraph{\bs largetitles} \dash\ set varying font sizes for the titles (the default).
 
 \subparagraph{\bs smalltitles} \dash\ set all titles' font size to \bs normalsize.
 
 \linefill
+\vspace*{-\baselineskip}
 
 \begin{multicols}{2}
 	\titleclass{\chapter}{straight}
@@ -652,7 +655,36 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 	\titleclass{\chapter}{top}
 \end{multicols}
 
+\vspace*{-\baselineskip}
 \linefill
+
+\subsubsection{Title Spacing}
+
+Current skip lengths before and after each sectioning level are available through \bs b<title>skip and \bs a<title>skip macros:
+
+\vspace*{-\baselineskip}
+\begin{multicols}{2}
+	\paragraph{Before}
+	\begin{itemize}
+		\item \bs bchapskip
+		\item \bs bsecskip
+		\item \bs bsubsecskip
+		\item \bs bsubsubsecskip
+		\item \bs bparskip
+		\item \bs bsubparskip
+	\end{itemize}
+	\columnbreak
+	\paragraph{After}
+	\begin{itemize}
+		\item \bs achapskip
+		\item \bs asecskip
+		\item \bs asubsecskip
+		\item \bs asubsubsecskip
+		\item \bs aparskip
+		\item \bs asubparskip
+	\end{itemize}
+\end{multicols}
+
 
 \subsection{Verbatim}
 
