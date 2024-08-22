@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/06/20]
+\ProvidesPackage{retrotype}[2024/08/20]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -202,20 +202,57 @@
 % TABS %
 %%%%%%%%
 
-\TabPositions{4\charwidth, 8\charwidth,
-12\charwidth, 16\charwidth, 20\charwidth,
-24\charwidth, 28\charwidth, 32\charwidth,
-36\charwidth, 40\charwidth, 44\charwidth,
-48\charwidth, 52\charwidth, 56\charwidth,
-60\charwidth, 64\charwidth, 68\charwidth,
-72\charwidth, 76\charwidth, 80\charwidth,
-84\charwidth, 88\charwidth, 92\charwidth,
-96\charwidth, 100\charwidth}
-
+\def\tabcharsDefault{4}
 \def\tabchars{4}
+\newlength{\tabwidth}% initialized in \setTabPositions
 
-\newlength{\tabwidth}
-\pgfmathsetlength{\tabwidth}{\tabchars\charwidth}
+\makeatletter
+% \setTabPostions{n}
+% changes distance between tab stops to n characters wide
+% also updates \tabchars and \tabwidth accordingly
+\newcommand{\setTabPositions}[1]{%
+	\def\retrotype@tabwidths{}%
+	\def\retrotype@tabsum{0pt}%
+	\whiledo{\lengthtest{\retrotype@tabsum < \linewidth}}{%
+		\pgfmathparse{#1 * \charwidth + \retrotype@tabsum}%
+		\xdef\retrotype@tabsum{\pgfmathresult pt}%
+		\ifx\retrotype@tabwidths\empty
+			\xdef\retrotype@tabwidths{\pgfmathresult pt}%
+		\else
+			\xdef\retrotype@tabwidths{\retrotype@tabwidths,\pgfmathresult pt}%
+		\fi
+	}
+	\expandafter\TabPositions\expandafter{\retrotype@tabwidths}%
+	\xdef\tabchars{#1}%
+	\pgfmathsetlength{\tabwidth}{\tabchars\charwidth}%
+}
+
+% \setCustomTabPositions{list}
+% takes a list of comma-separated distances in \charwidth amounts to use as tab stops
+% does NOT update \tabchars and \tabwidth since the tabs can be distanced unequally
+\newcommand{\setCustomTabPositions}[1]{%
+	\def\retrotype@tabwidths{}%
+	\def\retrotype@tabsum{0}%
+	\foreach \x in {#1} {%
+		\pgfmathparse{\x * \charwidth + \retrotype@tabsum}%
+		\xdef\retrotype@tabsum{\pgfmathresult}%
+		\ifx\retrotype@tabwidths\empty
+		\xdef\retrotype@tabwidths{\pgfmathresult pt}%
+		\else
+		\xdef\retrotype@tabwidths{\retrotype@tabwidths,\pgfmathresult pt}%
+		\fi
+	}%
+	\expandafter\TabPositions\expandafter{\retrotype@tabwidths}%
+}
+\makeatother
+
+% \defaultTabPositions
+% reset \TabPositions to the default ones (4 characters wide)
+\newcommand{\defaultTabPositions}{%
+	\setTabPositions{\tabcharsDefault}%
+}
+
+\defaultTabPositions{}
 
 % \tabspace
 % horizontal space equal to the current \tabwidth

@@ -37,7 +37,7 @@
 \def\license{LaTeX Project Public License 1.3c}
 \def\licenselink{https://www.latex-project.org/lppl.txt}
 \def\rtVer{0.2-devel}
-\def\rtDate{2024-06-20}
+\def\rtDate{2024-08-20}
 
 \hypersetup{%
 	pdfborderstyle={/S/U/W 1},% underlined hyperlinks
@@ -122,7 +122,8 @@ The most important part of achieving the objective is an appropriate font. \text
 \section{Roadmap}
 
 \begin{itemize}
-	\item v0.1 \dash\ (current state) initial public testing release;
+	\item v0.1 \dash\ initial public testing release;
+	\item v0.2 \dash\ \textit{work in progress};
 	\item improving existing features and adding new ones if needed;
 	\item v0.9 \dash\ all features complete, debugging and testing;
 	\item v1.0 \dash\ release.
@@ -226,7 +227,7 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subparagraph{\bs docfontsizeInt} \dash\ returns document font size (currently \docfontsizeInt).
 
-\subparagraph{\bs tabwidth} \dash\ width of a tab (currently \the\tabwidth), see \textbf{Tabs} below.
+\subparagraph{\bs tabwidth} \dash\ width of a tab (currently \the\tabwidth), see \textbf{Tabs} below. Changed automatically through the \bs setTabPositions call.
 
 
 \subsection{New Symbols}
@@ -264,7 +265,16 @@ v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...v...
 
 \subparagraph{\bs tabspace} \dash\ inserts horizontal space equal to the current \bs tabwidth.
 
-\subparagraph{\bs tabchars} \dash\ tab distance in characters (\tabchars). To change this, you will also need to set up new \bs TabPositions (see the \href{https://www.ctan.org/pkg/tabto-ltx}{tabto} package).
+\subparagraph{\bs tabchars} \dash\ tab distance in characters (\tabchars). Changed automatically through the \bs setTabPositions call.
+
+\subparagraph{\bs tabcharsDefault} \dash\ the default tab distance in characters (\tabcharsDefault),\\
+used in \bs defaultTabPositions call.
+
+\subparagraph{\bs defaultTabPositions} \dash\ reset \bs TabPositions to the default ones.
+
+\subparagraph{\bs setTabPositions\{n\}} \dash\ changes distance between tab stops to \textbf{n}~characters wide. Also updates \bs tabchars and \bs tabwidth accordingly.
+
+\subparagraph{\bs setCustomTabPositions\{list\}} \dash\ takes a \textbf{list} of comma-separated distances in \bs charwidth amounts to use as tab stops. Does \textbf{\ul{NOT}} update \bs tabchars and \bs tabwidth since the tabs can be distanced unequally.
 
 
 \break
