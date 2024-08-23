@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/08/22]
+\ProvidesPackage{retrotype}[2024/08/23]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -31,7 +31,6 @@
 \RequirePackage{multicol}
 \RequirePackage{ifthen}
 \RequirePackage{indentfirst}
-\RequirePackage{linegoal}
 \RequirePackage{tabto}% Tabbing to fixed positions
 \RequirePackage{tikz}
 
@@ -271,7 +270,39 @@
 }
 
 
-% LINES
+%%%%%%%%%%%%
+% LINEGOAL %
+%%%%%%%%%%%%
+\RequirePackage{linegoal}
+
+% fixing the \linegoal for the second column
+% https://tex.stackexchange.com/a/484033
+\makeatletter
+\let\Z@E@linegoal\relax % undefine the property
+\zref@newprop*{linegoal}[\linewidth]{%
+	\the\dimexpr
+	\ifdim\dimexpr
+	\linewidth -\the\pdflastxpos sp
+	+\ifodd\zref@extractdefault{linegoal/posx.\the\LNGL@unique}{page}\c@page
+	\oddsidemargin
+	\else\evensidemargin
+	\fi
+	+1in+\hoffset\relax<0pt
+	\columnwidth+\columnsep+\fi
+	\linewidth -\the\pdflastxpos sp
+	+\ifodd\zref@extractdefault{linegoal/posx.\the\LNGL@unique}{page}\c@page
+	\oddsidemargin
+	\else\evensidemargin
+	\fi
+	+1in+\hoffset
+	\relax
+}% linegoal zref-property
+\makeatother
+
+
+%%%%%%%%%
+% LINES %
+%%%%%%%%%
 
 % \rep{chars}{n}
 % repeat the chars n times
