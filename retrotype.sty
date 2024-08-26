@@ -31,7 +31,6 @@
 \RequirePackage{multicol}
 \RequirePackage{ifthen}
 \RequirePackage{indentfirst}
-\RequirePackage{tabto}% Tabbing to fixed positions
 \RequirePackage{tikz}
 
 
@@ -201,6 +200,8 @@
 % TABS %
 %%%%%%%%
 
+\RequirePackage{tabto}% Tabbing to fixed positions
+
 \def\tabcharsDefault{4}
 \def\tabchars{4}
 \newlength{\tabwidth}% initialized in \setTabPositions
@@ -258,7 +259,7 @@
 \newcommand{\tabspace}{\hspace*{\tabwidth}}
 
 %\tabn
-% tab to the n-th tab in the current line
+% skip to the n-th tab, counting from the current position
 \newcommand{\tabn}[1]{%
 	\newcount\idx
 	\idx=1
