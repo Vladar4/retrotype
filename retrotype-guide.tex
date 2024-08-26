@@ -71,7 +71,7 @@ __________________________________________|___/|_|______________________
 \vfill
 
 \begin{adjustbox}{center}
-	\includeverbatim{img/dragon.txt}
+	\BVerbatimInput{img/dragon.txt}
 \end{adjustbox}
 
 \vfill
@@ -620,7 +620,6 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 
 \subparagraph{\bs toc[n]} \dash\ print table of contents to the \textbf{n}-th depth.
 
-\skipline
 
 \subsection{Titles}
 
@@ -655,14 +654,14 @@ A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
 	\titleclass{\chapter}{top}
 \end{multicols}
 
-\vspace*{-\baselineskip}
+\vspace*{-4ex}
 \linefill
 
 \subsubsection{Title Spacing}
 
 Current skip lengths before and after each sectioning level are available through \bs b<title>skip and \bs a<title>skip macros:
 
-\vspace*{-\baselineskip}
+\vspace*{-2ex}
 \begin{multicols}{2}
 	\paragraph{Before}
 	\begin{itemize}
@@ -688,11 +687,15 @@ Current skip lengths before and after each sectioning level are available throug
 
 \subsection{Verbatim}
 
-\subparagraph{\bs includeverbatim\{file\}} \dash\ include text file verbatim.
+\subparagraph{\bs VerbatimInput\{file\}, \bs BVerbatimInput\{file\}, \bs LVerbatimInput\{file\}} \dash\ include text \textbf{file} verbatim (normal, TeX box, LR mode).
 
-\skipline
+\subparagraph{\{Verbatim\}, \{BVerbatim\}, \{LVerbatim\}} \dash\ verbatim text environments.
 
-All commands of the \href{https://www.ctan.org/pkg/listings}{listings} package (e.g. the \textbf{\{verbatim\}} environment) are also available by default.
+\subparagraph{\bs renewcommand\{\bs FancyVerbFormatLine\}[1]\{\#1\}} \dash\ execute arbitrary code for each line of verbatim text.
+
+\subparagraph{\bs fvset\{options\}} \dash\ set comma-separated verbatim text \textbf{options}.
+
+All commands of the \href{https://www.ctan.org/pkg/fancyvrb}{fancyvrb} package are also available by default.
 
 \vfill
 \cleartorightpage

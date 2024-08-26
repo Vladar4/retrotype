@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/08/23]
+\ProvidesPackage{retrotype}[2024/08/26]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -519,13 +519,7 @@
 % VERBATIM %
 %%%%%%%%%%%%
 
-\RequirePackage{listings}
-
-% \includeverbatim{file}
-% include text file verbatim
-\newcommand{\includeverbatim}[1]{%
-	\lstinputlisting[columns=fixed, keepspaces=true]{#1}
-}
+\RequirePackage{fancyvrb}
 
 
 %%%%%%%%%%
