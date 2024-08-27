@@ -356,6 +356,10 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\tabspace\bs opw[width]\{a\}} \dash\ overprint \textbf{a} for the given \textbf{width} on the line, but keep printing from the starting point (\textbf{width} = \bs linegoal by default).
 
+\subparagraph{\bs overprintn[n]\{a\}} \dash\ same as
+
+\subparagraph{\tabspace\bs opn[n]\{a\}} \dash\ overprint \textbf{a} for \textbf{n} times, but keep printing from the starting point (\textbf{n} = \bs cpl by default).
+
 \skipline
 
 \subparagraph{\bs underline\{chars\}} \dash\ same as
@@ -409,12 +413,16 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \begin{itemize}
 	\item \op{\textbar}{\bs op\{\bs textbar\}\{\ldots\}} \tab \bs op\{\bs textbar\}\{\ldots\} \tab \textit{(\bs overprint)}
 	\item \opw{\textbar}\bs opw\{\bs textbar\}\ldots \tabn{7} \textit{(\bs overprintw)}
+	\item \opn[20]{\textbar}\bs opn[20]\{\textbar\}\ldots \tabn{2} \bs opn[20]\{\bs textbar\} \tab (\bs overprintn)
 	\item \ul{\bs ul\{\ldots\}} \tab\bs ul\{\ldots\} \tab \textit{(\bs underline)}
 	\item \ulf \bs ulf \ldots \tabn{3} \textit{(\bs underlinefill)}
+	\item \uln[16]\bs uln[12] \ldots \tabn{2} \textit{(\bs underlinen)}
 	\item \ol{\bs ol\{\ldots\}} \tab\bs ol\{\ldots\} \tab \textit{(\bs overline)}
 	\item \olf \bs olf \ldots \tabn{3} \textit{(\bs overlinefill)}
+	\item \oln[16]\bs oln[12] \ldots \tabn{2} \textit{(\bs overlinen)}
 	\item \so{\bs so\{\ldots\}} \tab\bs so\{\ldots\} \tab \textit{(\bs strikeout)}
 	\item \sof \bs sof \ldots \tabn{3} \textit{(\bs strikeoutfill)}
+	\item \son[16]\bs son[12] \ldots \tabn{2} \textit{(\bs strikeoutn)}
 \end{itemize}
 
 \skipline

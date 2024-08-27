@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/08/26]
+\ProvidesPackage{retrotype}[2024/08/27]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -377,6 +377,13 @@
 	\setlength{\retrotype@strwidth}{#1}%
 	\protect{\stackengine{0pt}{}{\linecharw[#2]{\retrotype@strwidth}}{O}{l}{F}{T}{L}}%
 }
+
+% \overprintn[n]{a}
+% overprint a for n times, but continue printing from the starting point
+\newcommand{\overprintn}[2][\cpl]{%
+	\setlength{\retrotype@strwidth}{#1\charwidth}%
+	\protect{\stackengine{0pt}{}{\linecharw[#2]{\retrotype@strwidth}}{O}{l}{F}{T}{L}}%
+}
 \makeatother
 
 % \op{a}{chars}
@@ -384,6 +391,13 @@
 
 % \opw[width]{a}
 \newcommand{\opw}[2][\linegoal]{\overprintw[#1]{#2}}
+
+% \opn[n]{a}
+\newcommand{\opn}[2][\cpl]{\overprintn[#1]{#2}}
+
+
+% UNDERLINE
+
 
 % \underline{chars}
 \renewcommand{\underline}[1]{%
@@ -399,6 +413,16 @@
 % \ulf
 \newcommand{\ulf}{\overprintw{\_}}
 
+% \underlinen
+\newcommand{\underlinen}[1][\cpl]{\overprintn[#1]{\_}}
+
+% \uln
+\newcommand{\uln}[1][\cpl]{\overprintn[#1]{\_}}
+
+
+% OVERLINE
+
+
 % \overline{chars}
 \renewcommand{\overline}[1]{%
 	\overprint{\odash}{#1}%
@@ -413,6 +437,17 @@
 % \olf
 \newcommand{\olf}{\overprintw{\odash}}
 
+% \overlinen
+\newcommand{\overlinen}[1][\cpl]{\overprintn[#1]{\odash}}
+
+% \oln
+\newcommand{\oln}[1][\cpl]{\overprintn[#1]{\odash}}
+
+
+
+% STRIKEOUT
+
+
 % \strikeout{chars}
 \newcommand{\strikeout}[1]{%
 	\overprint{\dash}{#1}%
@@ -426,6 +461,13 @@
 
 % \sof
 \newcommand{\sof}{\overprintw{\dash}}
+
+% \strikeoutn
+\newcommand{\strikeoutn}[1][\cpl]{\overprintn[#1]{\dash}}
+
+% \son
+\newcommand{\son}[1][\cpl]{\overprintn[#1]{\dash}}
+
 
 %%%%%%%%%%%%%%
 % FORMATTING %
