@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/08/27]
+\ProvidesPackage{retrotype}[2024/09/08]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -340,7 +340,7 @@
 \newlength{\retrotype@linecharw}
 \newcommand{\linecharw}[2][\thelinechar]{%
 	\settowidth\retrotype@linecharw{#1}
-	\pgfmathparse{int(#2/\retrotype@linecharw)}%
+	\pgfmathparse{int(#2/\retrotype@linecharw+0.01pt)}% insufficient length fix
 	\tabto{\CurrentLineWidth}%
 	\hspace*{-\charwidth}% offset fix
 	\linechars[#1]{\pgfmathresult}%
