@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/09/08]
+\ProvidesPackage{retrotype}[2024/09/24]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -517,13 +517,13 @@
 	}
 }
 
-% \header[chars][format]{text}
+% \header[format]{text}[chars]
 % text with chars filling the line
 \NewDocumentCommand{\header}{ O{\bfseries} m O{\_} }{%
 	\par{#1 #2}\strut\linefill[#3]%
 }
 
-% \uheader[chars][format]{text}
+% \uheader[format]{text}[chars]
 % same as \header, with underlined text
 \NewDocumentCommand{\uheader}{ O{\bfseries} m O{\_} }{%
 	\par{\ul{#1{}#2}}\strut\linefill[#3]%
@@ -599,7 +599,7 @@
 % ENUM %
 %%%%%%%%
 
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 \setlist{nosep, leftmargin=\tabwidth}
 \renewcommand{\labelitemi}{*}
 \renewcommand{\labelitemii}{\itshape*}
