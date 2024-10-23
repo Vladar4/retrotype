@@ -8,10 +8,17 @@ Retrotype aims to replicate the look of old typewriter-made documents while keep
 | ![cover](https://i.postimg.cc/XYgtGGPD/retrotype02cover.jpg) | ![demonstration](https://i.postimg.cc/QMxwpNGN/retrotype02demo.jpg) |
 |                                                              |                                                                     |
 
+
 Usage
 -----
 
 Consult the `retrotype-guide.tex` document for the list of available commands and practical examples of their usage. The compiled PDF version of `retrotype-guide` is available in [Releases](https://github.com/Vladar4/retrotype/releases).
+
+
+Showcase
+--------
+* The Forbidden Temple of Pflarr [GitHub](https://github.com/Vladar4/the-forbidden-temple-of-pflarr), [itch.io](https://vladar.itch.io/the-forbidden-temple-of-pflarr), [blog](https://vladar.bearblog.dev/the-forbidden-temple-of-pflarr/)
+
 
 Changelog
 ---------
