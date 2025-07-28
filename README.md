@@ -23,6 +23,10 @@ Showcase
 Changelog
 ---------
 
+### v0.3 (WIP)
+* Changes:
+  * `\header`, `\uheader` now discourage pagebreaks immediately after them.
+
 ### v0.2 (2024-10-17)
 * New commands:
   * `\cleartorightpage`

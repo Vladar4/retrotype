@@ -1,7 +1,7 @@
 % !TeX program = xelatex
 %
 %% retrotype.sty
-%% Copyright 2024 Vladimir Arabadzhi
+%% Copyright 2024-2025 Vladimir Arabadzhi
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2024/10/17]
+\ProvidesPackage{retrotype}[2025/07/28]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -520,13 +520,13 @@
 % \header[format]{text}[chars]
 % text with chars filling the line
 \NewDocumentCommand{\header}{ O{\bfseries} m O{\_} }{%
-	\par{#1 #2}\strut\linefill[#3]%
+	\par{#1 #2}\strut\linefill[#3]\nopagebreak%
 }
 
 % \uheader[format]{text}[chars]
 % same as \header, with underlined text
 \NewDocumentCommand{\uheader}{ O{\bfseries} m O{\_} }{%
-	\par{\ul{#1{}#2}}\strut\linefill[#3]%
+	\par{\ul{#1{}#2}}\strut\linefill[#3]\nopagebreak%
 }
 
 % \begin{headerbox}[format]{header}[top][bottom]
