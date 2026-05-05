@@ -20,7 +20,7 @@
 %   retrotype-guide.tex,
 %   TT2020.fontspec.
 
-\ProvidesPackage{retrotype}[2025/07/28]
+\ProvidesPackage{retrotype}[2026/05/05]
 
 \RequirePackage{comment}
 \RequirePackage[autostyle=true]{csquotes}
@@ -569,30 +569,27 @@
 %%%%%%%%%%
 
 \RequirePackage{tabularx}
+\RequirePackage{tabularray}
 
-%\makeatletter
-%\def\twhline{\multicolumn{\LT@cols}{l}{\linecharw[\textwidth]{-}}\\}
-%\makeatother
-%\newcommand{\twhline}[3]\thelinechar]{\noalign{\multicolumn{#2}{l}{\linecharw[#1]{#3}}\\}}
+% tblr setup
+\SetTblrInner{
+	colsep = \charwidth,
+	rowsep = 0pt,
+	row{1-Z} = {ht=\baselineskip},
+}
 
-% Left-aligned column
-\newcolumntype{L}{X}
-% Centered column
-\newcolumntype{C}{>{\centering\arraybackslash}X}
-% Right-aligned column
-\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
-% Separators
-\newcolumntype{|}{@{|}}
-\newcolumntype{-}{@{\dash}}
-\newcolumntype{_}{@{\_}}
-\newcolumntype{^}{@{\odash}}
-\newcolumntype{*}{@{*}}
-\newcolumntype{~}{@{~}}
+% default column separator shortcut
+\NewTblrColumnType{I}{!{|}}
 
-\NewDocumentEnvironment{retrotable}{ O{LL} O{\linewidth} }{%
-	\gdef\retrotablewidth{#2}
-	\noindent\tabularx{#2}{#1}%
-}{\endtabularx\noindent}
+% rthline[chars]
+\NewTblrTableCommand\rthline[1][\dash]{%
+	\hline[text={\strut\xleaders\hbox{\raisebox{\dp\strutbox}[0pt][0pt]{\normalfont{#1}}}\hfill\kern0pt}]%
+}
+
+% rtcline[chars]{a-b}
+\NewTblrTableCommand\rtcline[2][\dash]{%
+	\cline[text={\strut\xleaders\hbox{\raisebox{\dp\strutbox}[0pt][0pt]{\normalfont{#1}}}\hfill\kern0pt}]{#2}%
+}
 
 
 %%%%%%%%
