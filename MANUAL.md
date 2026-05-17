@@ -73,10 +73,10 @@ While you can set up any custom layouts using the `\newgeometry` command (see th
 * `\tabwidth` — width of a tab (see Tabs below). Changed automatically through the `\setTabPositions` call.
 
 ### New Symbols
-* `\dash` — dash (&emdash;).
+* `\dash` — dash (&mdash;).
 * `\odash` — overline dash (&oline;).
 * `\tld` — tilde (~).
-* `\bs` — backslash (\).
+* `\bs` — backslash (\\).
 * `\thelinechar` — the default line character (`\dash` by default).
 
 ### Pages
@@ -110,32 +110,32 @@ into the remaining space on the line.
 Retrotype uses some capabilities of the [stackengine](https://www.ctan.org/pkg/stackengine) package to simulate the overprinting of one character on top of another — a typewriting
 technique for creating new characters and graphic design elements.
 * `\overprint{a}{chars}` — same as
-* `\op{a}{chars}` — overprint **a** on top of all **chars**.
+  * `\op{a}{chars}` — overprint **a** on top of all **chars**.
 * `\overprintw[width]{a}` — same as
-* `\opw[width]{a}` — overprint **a** for the given **width** on the line, but keep printing from the starting point (**width** = `\linegoal` by default).
+  * `\opw[width]{a}` — overprint **a** for the given **width** on the line, but keep printing from the starting point (**width** = `\linegoal` by default).
 * `\overprintn[n]{a}` — same as
-* `\opn[n]{a}` — overprint **a** for **n** times, but keep printing from the starting point (**n** = `\cpl` by default).
+  * `\opn[n]{a}` — overprint **a** for **n** times, but keep printing from the starting point (**n** = `\cpl` by default).
 
 * `\underline{chars}` — same as
-* `\ul{chars}` — underline given **chars**.
+  * `\ul{chars}` — underline given **chars**.
 * `\underlinefill` — same as
-* `\ulf` — underline the rest of the line, but keep printing from the starting point.
+  * `\ulf` — underline the rest of the line, but keep printing from the starting point.
 * `\underlinen[n]` — same as
-* `\uln[n]` — underline **n** chars, but keep printing from the starting point (**n** = `\cpl` by default).
+  * `\uln[n]` — underline **n** chars, but keep printing from the starting point (**n** = `\cpl` by default).
 
 * `\overline{chars}` — same as
-* `\ol{chars}` — overline given **chars**.
+  * `\ol{chars}` — overline given **chars**.
 * `\overlinefill` — same as
-* `\olf` — overline the rest of the line, but keep printing from the starting point.
+  * `\olf` — overline the rest of the line, but keep printing from the starting point.
 * `\overlinen[n]` — same as
-* `\oln[n]` — overline **n** chars, but keep printing from the starting point (**n** = `\cpl` by default).
+  * `\oln[n]` — overline **n** chars, but keep printing from the starting point (**n** = `\cpl` by default).
 
 * `\strikeout{chars}` — same as
-* `\so{chars}` — strikeout given **chars**.
+  * `\so{chars}` — strikeout given **chars**.
 * `\strikeoutfill` — same as
-* `\sof` — strikeout the rest of the line, but keep printing from the starting point.
+  * `\sof` — strikeout the rest of the line, but keep printing from the starting point.
 * `\strikeoutn[n]` — same as
-* `\son[n]` — strikeout **n** chars, but keep printing from the starting point (**n** = `\cpl` by default).
+  * `\son[n]` — strikeout **n** chars, but keep printing from the starting point (**n** = `\cpl` by default).
 
 ### Formatting
 * `\skipline[height]` — insert a vertical space (`\baselineskip` by default).
@@ -159,7 +159,7 @@ technique for creating new characters and graphic design elements.
 
 ### Tables
 
-Additions to the tabularray's tblr environment. See the [tabularray](https://ctan.org/pkg/tabularray) package documentation for full details.
+Additions to the tabularray's `tblr` environment. See the [tabularray](https://ctan.org/pkg/tabularray) package documentation for full details.
 
 ```tex
 \begin{tblr}{
@@ -234,7 +234,7 @@ All commands of the [fancyvrb](https://www.ctan.org/pkg/fancyvrb) package are al
   * `file` — image file name;
   * `scale` — image scale (`1.0` by default).
 
-#### Blend modes
+#### Blend modes:
 1. normal
 2. multiply
 3. screen
