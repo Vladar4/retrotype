@@ -1,7 +1,7 @@
 % !TeX program = xelatex
 %
 %% retrotype-guide.tex
-%% Copyright 2024-2025 Vladimir Arabadzhi
+%% Copyright 2024-2026 Vladimir Arabadzhi
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -37,7 +37,7 @@
 \def\license{LaTeX Project Public License 1.3c}
 \def\licenselink{https://www.latex-project.org/lppl.txt}
 \def\rtVer{0.3-devel}
-\def\rtDate{2025-07-28}
+\def\rtDate{2026-05-05}
 
 \hypersetup{%
 	pdfborderstyle={/S/U/W 1},% underlined hyperlinks
@@ -123,7 +123,7 @@ The most important part of achieving the objective is an appropriate font. \text
 
 \begin{itemize}
 	\item v0.1 \dash\ initial public testing release;
-	\item \textbf{v0.2 \dash\ current release;}
+	\item \textbf{v0.3 \dash\ current release;}
 	\item improving existing features and adding new ones if needed;
 	\item v0.9 \dash\ all features complete, debugging and testing;
 	\item v1.0 \dash\ release.
@@ -190,19 +190,25 @@ While you can set up any custom layouts using the \bs newgeometry command (see t
 
 \subsection{Current Dimensions}
 
-\newcommand{\curdim}[1]{\printinunitsof{pt}\prntlen{#1} & \printinunitsof{pc}\prntlen{#1} & \printinunitsof{mm}\prntlen{#1} & \printinunitsof{in}\prntlen{#1}}
+\newcommand{\curdim}[1]{%
+	\printinunitsof{pt}\prntlen{#1} &%
+	\printinunitsof{pc}\prntlen{#1} &%
+	\printinunitsof{mm}\prntlen{#1} &%
+	\printinunitsof{in}\prntlen{#1}%
+}
 
-\begin{retrotable}[lLLLL]
-	Page width & \curdim{\pdfpagewidth} \\
-	Page height & \curdim{\pdfpageheight} \\
-	Text width & \curdim{\textwidth} \\
-	Char width & \curdim{\charwidth} \\
-	Baseline skip & \curdim{\baselineskip} \\
-	Page layout & \pagelayout \\
-	Font size & \docfontsizeInt \\
-	Chars per line & \cpl \\
-	Lines per page & \lpp \\
-\end{retrotable}
+\begin{tabularx}{\linewidth}{lXXXX}
+	Page width		& \curdim{\pdfpagewidth} \\
+	Page height		& \curdim{\pdfpageheight} \\
+	Text width		& \curdim{\textwidth} \\
+	Char width		& \curdim{\charwidth} \\
+	Baseline skip	& \curdim{\baselineskip} \\
+	Page layout		& \pagelayout \\
+	Font size		& \docfontsizeInt \\
+	Chars per line	& \cpl \\
+	Lines per page	& \lpp \\
+\end{tabularx}
+
 
 ~Page/Text width ratio:~ \pgfmathparse{\pdfpagewidth/\textwidth}\pgfmathresult
 
@@ -332,7 +338,7 @@ used in \bs defaultTabPositions call.
 
 \skipline
 
-\bs linegoal \dash\ the remaining space is \linegoal.
+\bs linegoal \dash\ the remaining space is \linegoal.% Run the build a second time to compile.
 
 \skipline
 
@@ -370,6 +376,10 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\tabspace\bs ulf} \dash\ underline the rest of the line, but keep printing from the starting point.
 
+\subparagraph{\bs underlinen[n]} \dash\ same as
+
+\subparagraph{\tabspace\bs uln[n]} \dash\ underline \textbf{n} chars, but keep printing from the starting point (\textbf{n} = \bs cpl by default).
+
 \skipline
 
 \subparagraph{\bs overline\{chars\}} \dash\ same as
@@ -380,6 +390,10 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \subparagraph{\tabspace\bs olf} \dash\ overline the rest of the line, but keep printing from the starting point.
 
+\subparagraph{\bs overlinen[n]} \dash\ same as
+
+\subparagraph{\tabspace\bs oln[n]} \dash\ overline \textbf{n} chars, but keep printing from the starting point (\textbf{n} = \bs cpl by default).
+
 \skipline
 
 \subparagraph{\bs strikeout\{chars\}} \dash\ same as
@@ -389,6 +403,10 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \subparagraph{\bs strikeoutfill} \dash\ same as
 
 \subparagraph{\tabspace\bs sof} \dash\ strikeout the rest of the line, but keep printing from the starting point.
+
+\subparagraph{\bs strikeoutn[n]} \dash\ same as
+
+\subparagraph{\tabspace\bs son[n]} \dash\ strikeout \textbf{n} chars, but keep printing from the starting point (\textbf{n} = \bs cpl by default).
 
 \break
 
@@ -498,7 +516,7 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 
 \skipline
 
-\subparagraph{\{headerbox\}[format]\{header\}[top][bottom]} environment \dash\ text box with a~\textbf{header}, surrounded by lines (\textbf{top} = \bs\_, \textbf{bottom} = \bs odash by default).
+\subparagraph{\{headerbox\}[format]\{header\}[top][bottom]} environment \dash\ text box with a~\textbf{header}, surrounded by top and bottom lines (\textbf{top} = \bs\_ and \textbf{bottom} = \bs odash by default).
 
 \subparagraph{\{uheaderbox\}[format]\{header\}[top][bottom]} environment \dash\ same as \textbf{\{headerbox\}}, with \textbf{header} underlined.
 
@@ -553,63 +571,124 @@ Retrotype uses some capabilities of the \href{https://www.ctan.org/pkg/stackengi
 \break
 
 
-\subsection{Retrotable}
+\subsection{Tables}
 
-A modified \href{https://www.ctan.org/pkg/tabularx}{tabularx} environment.
-
-\begin{tabbox}[4][4]
-	\begin{headerbox}{NOTE:}
-		Work in progress.
-		
-		There should be an easier way to implement the horizontal lines than using the \bs multicolumn hack (see the \textbf{Examples}).
-	\end{headerbox}
-\end{tabbox}
-
-\bs begin\{retrotable\}[columns][width]
-
-\tab ...
-
-\bs end\{retrotable\}
-
-(width is \bs linewidth by default)
+Additions to the \href{https://ctan.org/pkg/tabularray}{tabularray}'s \textbf{tblr} environment. See the tabularray package documentation for full details.
 
 \skipline
 
-\paragraph{New column types}
+\bs begin\{tblr\}\{
 
-\begin{itemize}
-	\item L left-aligned expandable column (same as X from tabularx)
-	\item C centered expandable column
-	\item R right-aligned expandable column
-	\item | vertical separator
-	\item \_ top line (underline: \_ )
-	\item - middle line (dash: \dash{} )
-	\item \^{} bottom line (overline: \ol{~} )
-	\item * asterisk
-	\item \~{} empty space
-\end{itemize}
+\tab\tab width = \bs linewidth,
 
-\break
+\tab\tab colspec = \{I X\{l\} I X\{l\} I\},
+
+\tab \}
+
+\tab ...
+
+\bs end\{tblr\}
+
+\skipline
+
+\subsubsection{Column separators}
+
+\subparagraph{I} \dash\ default column separator shortcut: {\bs NewTblrColumnType\{I\}\{!\{|\}\}}.
+\subparagraph{!\{chars\}} \dash\ custom separator that \ul{inserts} into inter-column space\\
+	\tab (\bs colsep = \bs charwidth by default).
+\subparagraph{@\{chars\}} \dash\ custom separator that \ul{replaces} inter-column space.
+
+
+\skipline
+
+\subsubsection{New commands}
+
+\subparagraph{\bs rthline[chars]} \dash\ hline filled by repeating \textbf{chars}.
+\subparagraph{\bs rtcline[chars]\{a-b\}} \dash\ cline in \textbf{a-b} column range filled by repeating \textbf{chars}.
+
+
+\vfill
+
 
 \paragraph{Examples}
 
 \begin{verbatim}
-\begin{retrotable}[|C|L|R|][0.5\linewidth]
-    \multicolumn{3}{_l_}{\linecharw[\_]{0.5\linewidth}}\\
-    Center & Left & Right \\
-    1 & 2 & 2 \\
-    4 & 5 & 6 \\
-    \multicolumn{3}{^l^}{\linecharw[\odash]{0.5\linewidth}}\\
-\end{retrotable}
+\begin{tblr}{
+		width = 0.5\linewidth,
+		colspec = {I X[c] X[r] !{\op{|}{-}} X[l] X[l] I},
+	}
+	\rthline[\_]
+	Center & Right & Left & Left \\
+	\rthline
+	1 & 2 & \SetCell[c=2]{c} \bs SetCell[c=2]\{c\} \\
+	\rtcline[-]{2-4}
+	3 & 4 & 5 & 6 \\
+	\rthline[\odash]
+\end{tblr}
 \end{verbatim}
 
-\begin{retrotable}[|C|L|R|][0.5\linewidth]
-	\multicolumn{3}{_l_}{\linecharw[\_]{0.5\linewidth}}\\
-	Center & Left & Right \\
-	1 & 2 & 2 \\
-	4 & 5 & 6 \\
-	\multicolumn{3}{^l^}{\linecharw[\odash]{0.5\linewidth}}\\
-\end{retrotable}
+
+\begin{tblr}{
+		width = 0.5\linewidth,
+		colspec = {I X[c] X[r] !{\op{|}{-}} X[l] X[l] I},
+	}
+	\rthline[\_]
+	Center & Right & Left & Left \\
+	\rthline
+	1 & 2 & \SetCell[c=2]{c} \bs SetCell[c=2]\{c\} \\
+	\rtcline[-]{2-4}
+	3 & 4 & 5 & 6 \\
+	\rthline[\odash]
+\end{tblr}
+
+
+\break
+
+
+\begin{verbatim}
+\begin{tblr}{
+		width = \linewidth,
+		colspec = {I l X[5,l] !{:} X[2,r] I},
+		row{1} = {font={\bfseries}},
+		column{1} = {font={\bfseries}},
+	}
+	\rthline[\_]
+	Row 1 & Left, weight 5 & Right, weight 2 \\
+	\rthline[|]
+	Row 2 & \linefill[fill-] & row 2 \\
+	Row 3 & As you can see here, the limitation of the text-based
+		column separators like \textbf{!\{:\}} is that they would not
+		repeat for the multi-line cells. & row 3 \\
+	Row 4 & \SetCell[r=3]{h} This limitation can be avoided
+		by using a~multi-row cell (\bs SetCell[r=n]\{h\})
+		with n-1 empty rows below it. & row 4 \\
+	&& row 5 \\
+	&& row 6 \\
+	\rthline[\odash]
+\end{tblr}
+\end{verbatim}
+
+
+\begin{tblr}{
+		width = \linewidth,
+		colspec = {I l X[5,l] !{:} X[2,r] I},
+		row{1} = {font={\bfseries}},
+		column{1} = {font={\bfseries}},
+	}
+	\rthline[\_]
+	Row 1 & Left, weight 5 & Right, weight 2 \\
+	\rthline[|]
+	Row 2 & \linefill[fill-] & row 2 \\
+	Row 3 & As you can see here, the limitation of the text-based
+		column separators like \textbf{!\{:\}} is that they would not
+		repeat for the multi-line cells. & row 3 \\
+	Row 4 & \SetCell[r=3]{h} This limitation can be avoided
+		by using a~multi-row cell (\bs SetCell[r=n]\{h\})
+		with n-1 empty rows below it. & row 4 \\
+	&& row 5 \\
+	&& row 6 \\
+	\rthline[\odash]
+\end{tblr}
 
 
 \vfill
