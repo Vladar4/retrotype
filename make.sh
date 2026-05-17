@@ -2,10 +2,11 @@
 # Build Retrotype Guide PDF
 
 LIST="retrotype-guide"
+DATE=$(date +%Y-%m-%d)
 
 for FILE in $LIST
 do
-    JOB="$FILE-$(date +%Y-%m-%d)" # append current date
+    JOB="$FILE-$DATE" # append current date
     for i in $(seq 3)
     do
         xelatex -synctex=1 -interaction=nonstopmode -jobname="$JOB" "$FILE"
